@@ -24,5 +24,12 @@ hs_err_pid*
 
 # vscode
 *.code-workspace
-*/target
-*/.vscode
+**/.vscode
+
+# maven
+**/target
+**/mvnw
+**/mvnw.cmd
+**/.mvn
+
+**/.gitignore

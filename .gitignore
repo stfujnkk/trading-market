@@ -34,5 +34,10 @@ hs_err_pid*
 
 **/.gitignore
 
+### IntelliJ IDEA ###
 *.iml
+*.iws
+*.iml
+*.ipr
 **/.idea
+**/HELP.md

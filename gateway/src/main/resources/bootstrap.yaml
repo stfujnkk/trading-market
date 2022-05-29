@@ -1,0 +1,23 @@
+constant:
+  env: &env dev
+
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: *env
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        namespace: 9d5a5f34-0d06-4084-85c0-89d8e958a81c
+        group: *env
+        file-extension: yaml
+#        extension-configs:
+#          - data-id: datasource.yaml
+#            group: *env
+#          - data-id: mybatis.yaml
+#            group: *env
+#          - data-id: other.yaml
+#            group: *env
+#            refresh: true

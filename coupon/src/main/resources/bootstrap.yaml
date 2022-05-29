@@ -1,7 +1,23 @@
+constant:
+  env: &env dev
+
 spring:
   application:
     name: coupon
+  profiles:
+    active: *env
   cloud:
     nacos:
       config:
         server-addr: 127.0.0.1:8848
+        namespace: da0895f4-694d-446f-ae93-cc6b2dfb4c8f
+        group: *env
+        file-extension: yaml
+        extension-configs:
+          - data-id: datasource.yaml
+            group: *env
+          - data-id: mybatis.yaml
+            group: *env
+          - data-id: other.yaml
+            group: *env
+            refresh: true

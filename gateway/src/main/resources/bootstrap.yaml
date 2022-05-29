@@ -13,11 +13,3 @@ spring:
         namespace: 9d5a5f34-0d06-4084-85c0-89d8e958a81c
         group: *env
         file-extension: yaml
-#        extension-configs:
-#          - data-id: datasource.yaml
-#            group: *env
-#          - data-id: mybatis.yaml
-#            group: *env
-#          - data-id: other.yaml
-#            group: *env
-#            refresh: true

@@ -2,12 +2,14 @@ package cn.lyf.market.product.controller;
 
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.common.utils.R;
+import cn.lyf.common.valid.group.AddGroup;
+import cn.lyf.common.valid.group.UpdateGroup;
 import cn.lyf.market.product.entity.BrandEntity;
 import cn.lyf.market.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -53,7 +55,7 @@ public class BrandController {
      */
     @RequestMapping("/save")
     //@RequiresPermissions("product:brand:save")
-    public R save(@Valid @RequestBody BrandEntity brand/*, BindingResult bindingResult*/) {
+    public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand/*, BindingResult bindingResult*/) {
         brandService.save(brand);
         return R.ok();
     }
@@ -63,9 +65,8 @@ public class BrandController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand) {
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
         brandService.updateById(brand);
-
         return R.ok();
     }
 

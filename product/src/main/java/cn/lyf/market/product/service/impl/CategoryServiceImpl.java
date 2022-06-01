@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,11 +35,24 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<CategoryEntity> categoryList = baseMapper.selectList(null);
         Map<Long, List<CategoryEntity>> menus =
                 categoryList.stream().collect(Collectors.groupingBy(CategoryEntity::getParentCid));
+        Comparator<CategoryEntity> cmp = (a, b) -> {
+            Integer sa = a.getSort(), sb = b.getSort();
+            return (sa == null ? 0 : sa) - (sb == null ? 0 : sb);
+        };
         categoryList.stream().forEach(x -> {
             Long id = x.getCatId();
-            x.setChildren(menus.get(id));
+            List<CategoryEntity> children = menus.get(id);
+            if (children == null) return;
+            children.sort(cmp);
+            x.setChildren(children);
         });
-        return categoryList.stream().filter(x -> x.getParentCid() == 0).collect(Collectors.toList());
+        return categoryList.stream().filter(x -> x.getParentCid() == 0).sorted(cmp).collect(Collectors.toList());
+    }
+
+    @Override
+    public void removeMenuByIds(List<Long> ids) {
+        // TODO 检查菜单是否被引用
+        baseMapper.deleteBatchIds(ids);
     }
 
 }

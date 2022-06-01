@@ -14,3 +14,4 @@ INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `or
     SELECT @parentId, '修改', null, 'product:category:update', '2', null, '6';
 INSERT INTO `sys_menu` (`parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`)
     SELECT @parentId, '删除', null, 'product:category:delete', '2', null, '6';
+# INSERT INTO `pms_category` VALUES ('1', '图书、音像、电子书刊', '0', '1', '1', '0', null, null, '0');

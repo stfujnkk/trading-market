@@ -10,7 +10,7 @@ spring:
     nacos:
       config:
         server-addr: 127.0.0.1:8848
-        namespace: da0895f4-694d-446f-ae93-cc6b2dfb4c8f
+        namespace: 8e60f163-ea03-4589-95c1-9cc2edb57590
         group: *env
         file-extension: yaml
         extension-configs:

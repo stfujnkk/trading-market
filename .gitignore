@@ -41,3 +41,7 @@ hs_err_pid*
 *.ipr
 **/.idea
 **/HELP.md
+
+work/**
+derby.log
+logs/**

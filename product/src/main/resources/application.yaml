@@ -21,3 +21,6 @@ mybatis-plus:
       logic-delete-field: 1
       logic-not-delete-value: 0
 
+logging:
+  level:
+    cn.lyf.market: debug

@@ -31,8 +31,7 @@ public class CategoryController {
      */
     @RequestMapping("/list/tree")
     public R list() {
-        List<CategoryEntity> t = categoryService.listWithTree();
-        return R.ok().put("page", t);
+        return R.ok().put("data", categoryService.listWithTree());
     }
 
 
@@ -43,7 +42,6 @@ public class CategoryController {
     //@RequiresPermissions("product:category:info")
     public R info(@PathVariable("catId") Long catId) {
         CategoryEntity category = categoryService.getById(catId);
-
         return R.ok().put("data", category);
     }
 
@@ -54,7 +52,6 @@ public class CategoryController {
     //@RequiresPermissions("product:category:save")
     public R save(@RequestBody CategoryEntity category) {
         categoryService.save(category);
-
         return R.ok();
     }
 
@@ -74,8 +71,7 @@ public class CategoryController {
     @RequestMapping("/update")
     //@RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category) {
-        categoryService.updateById(category);
-
+        categoryService.updateCascade(category);
         return R.ok();
     }
 

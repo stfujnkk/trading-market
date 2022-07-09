@@ -4,6 +4,7 @@ import cn.lyf.common.utils.PageUtils;
 import cn.lyf.common.utils.R;
 import cn.lyf.market.product.entity.AttrEntity;
 import cn.lyf.market.product.service.AttrService;
+import cn.lyf.market.product.vo.AttrRespVo;
 import cn.lyf.market.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,10 @@ public class AttrController {
     private AttrService attrService;
 
     @GetMapping("/base/list/{catelogId}")
-    public R baseAttrList(@RequestParam Map<String,Object>params,@PathVariable("catelogId")Long catelogId){
+    public R baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId) {
 
-        PageUtils page= attrService.queryBaseAttrPage(params,catelogId);
-        return R.ok().put("page",page);
+        PageUtils page = attrService.queryBaseAttrPage(params, catelogId);
+        return R.ok().put("page", page);
     }
 
     /**
@@ -48,9 +49,9 @@ public class AttrController {
     @RequestMapping("/info/{attrId}")
     //@RequiresPermissions("product:attr:info")
     public R info(@PathVariable("attrId") Long attrId) {
-        AttrEntity attr = attrService.getById(attrId);
+        AttrRespVo respVo = attrService.getAttrInfo(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", respVo);
     }
 
     /**
@@ -69,9 +70,8 @@ public class AttrController {
      */
     @RequestMapping("/update")
     //@RequiresPermissions("product:attr:update")
-    public R update(@RequestBody AttrEntity attr) {
-        attrService.updateById(attr);
-
+    public R update(@RequestBody AttrVo attr) {
+        attrService.updateAttr(attr);
         return R.ok();
     }
 

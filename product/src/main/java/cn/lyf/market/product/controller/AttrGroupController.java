@@ -4,6 +4,7 @@ import cn.lyf.common.utils.PageUtils;
 import cn.lyf.common.utils.R;
 import cn.lyf.market.product.entity.AttrEntity;
 import cn.lyf.market.product.entity.AttrGroupEntity;
+import cn.lyf.market.product.service.AttrAttrgroupRelationService;
 import cn.lyf.market.product.service.AttrGroupService;
 import cn.lyf.market.product.service.AttrService;
 import cn.lyf.market.product.service.CategoryService;
@@ -34,6 +35,15 @@ public class AttrGroupController {
 
     @Autowired
     AttrService attrService;
+
+    @Autowired
+    AttrAttrgroupRelationService relationService;
+
+    @PostMapping("/attr/relation")
+    public R addAttrGroupRelation(@RequestBody List<AttrGroupRelationVo> vos) {
+        relationService.saveBatch(vos);
+        return R.ok();
+    }
 
 
     /**

@@ -87,7 +87,6 @@ public class AttrController {
     //@RequiresPermissions("product:attr:delete")
     public R delete(@RequestBody Long[] attrIds) {
         attrService.removeByIds(Arrays.asList(attrIds));
-
         return R.ok();
     }
 

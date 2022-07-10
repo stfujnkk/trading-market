@@ -13,6 +13,7 @@ import cn.lyf.market.product.entity.AttrGroupEntity;
 import cn.lyf.market.product.entity.CategoryEntity;
 import cn.lyf.market.product.service.AttrService;
 import cn.lyf.market.product.service.CategoryService;
+import cn.lyf.market.product.vo.AttrGroupRelationVo;
 import cn.lyf.market.product.vo.AttrRespVo;
 import cn.lyf.market.product.vo.AttrVo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -41,13 +42,30 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     @Autowired
     CategoryService categoryService;
 
+    /**
+     * 根据分组id查找关联的基本属性
+     *
+     * @param attrgroupId 属性分组id
+     * @return 关联的属性列表
+     */
+    @Override
+    public List<AttrEntity> getRelationAttr(Long attrgroupId) {
+        List<AttrAttrgroupRelationEntity> relationEntities = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
+        List<Long> attrIds = relationEntities.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+        return this.listByIds(attrIds);
+    }
+
+    @Override
+    public void deleteRelationAttr(List<AttrGroupRelationVo> relationVos) {
+        relationDao.deleteRelations(relationVos);
+    }
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<AttrEntity> page = this.page(
                 new Query<AttrEntity>().getPage(params),
-                new QueryWrapper<AttrEntity>()
+                new QueryWrapper<>()
         );
-
         return new PageUtils(page);
     }
 
@@ -127,9 +145,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
         String key = (String) params.get("key");
         if (!StringUtils.isEmpty(key)) {
-            queryWrapper.and(w -> {
-                w.eq("attr_id", key).or().like("attr_name", key);
-            });
+            queryWrapper.and(w -> w.eq("attr_id", key).or().like("attr_name", key));
         }
         IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), queryWrapper);
         List<AttrEntity> records = page.getRecords();

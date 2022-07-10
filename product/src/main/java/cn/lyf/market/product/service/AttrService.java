@@ -1,11 +1,13 @@
 package cn.lyf.market.product.service;
 
+import cn.lyf.market.product.vo.AttrGroupRelationVo;
 import cn.lyf.market.product.vo.AttrRespVo;
 import cn.lyf.market.product.vo.AttrVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.market.product.entity.AttrEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,5 +30,9 @@ public interface AttrService extends IService<AttrEntity> {
     void updateAttr(AttrVo attr);
 
     PageUtils querySaleAttrPage(Map<String, Object> params, Long catelogId);
+
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
+
+    void deleteRelationAttr(List<AttrGroupRelationVo> relationVos);
 }
 

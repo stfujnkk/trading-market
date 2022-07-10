@@ -2,9 +2,12 @@ package cn.lyf.market.product.controller;
 
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.common.utils.R;
+import cn.lyf.market.product.entity.AttrEntity;
 import cn.lyf.market.product.entity.AttrGroupEntity;
 import cn.lyf.market.product.service.AttrGroupService;
+import cn.lyf.market.product.service.AttrService;
 import cn.lyf.market.product.service.CategoryService;
+import cn.lyf.market.product.vo.AttrGroupRelationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +32,13 @@ public class AttrGroupController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    AttrService attrService;
+
+
+
     /**
-     * 列表
+     * 列表 无id时获取所有,有id时获取对应分类
      */
     @RequestMapping(value = {"/list/{id}", "/list"})
     public R list(@RequestParam Map<String, Object> params, @PathVariable(name = "id", required = false) Long catelogId) {
@@ -81,4 +89,14 @@ public class AttrGroupController {
         return R.ok();
     }
 
+    @GetMapping("/{attrgroupId}/attr/relation")
+    public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
+        List<AttrEntity> entities=attrService.getRelationAttr(attrgroupId);
+        return R.ok().put("data",entities);
+    }
+    @PostMapping("/attr/relation/delete")
+    public R deleteRelation(@RequestBody List<AttrGroupRelationVo>relationVos){
+        attrService.deleteRelationAttr(relationVos);
+        return R.ok();
+    }
 }

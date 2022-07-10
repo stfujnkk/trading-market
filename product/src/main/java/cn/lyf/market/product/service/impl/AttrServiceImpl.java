@@ -60,6 +60,35 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         relationDao.deleteRelations(relationVos);
     }
 
+    /**
+     * 获取当前分组没有关联的所有属性
+     * 当前分组只能关联自己所属分类里的且没被自己和别的分组引用的属性
+     *
+     * @param attrgroupId 组id
+     * @param params      分页参数
+     */
+    @Override
+    public PageUtils getNoRelationAttr(Long attrgroupId, Map<String, Object> params) {
+        // 当前组id --> 分类id --> 同分类下所有组id -->排除 同分类所有组的已选的属性
+        AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrgroupId);
+        Long categoryId = attrGroupEntity.getCatelogId();
+        List<AttrGroupEntity> attrGroupEntities = attrGroupDao.selectList(new QueryWrapper<AttrGroupEntity>().eq("catelog_id", categoryId));
+        List<Long> gids = attrGroupEntities.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
+        List<AttrAttrgroupRelationEntity> attrAttrgroupRelationEntities = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().in("attr_group_id", gids));
+        List<Long> attrIds = attrAttrgroupRelationEntities.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+        QueryWrapper<AttrEntity> wrapper = new QueryWrapper<AttrEntity>()
+                .eq("catelog_id", categoryId)
+                .eq("attr_type", ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode())
+                .notIn("attr_id", attrIds);
+        //查询
+        final String key = (String) params.get("key");
+        if (!StringUtils.isEmpty(key)) {
+            wrapper.and(w -> w.eq("attr_id", key).or().like("attr_name", key));
+        }
+        // 分页
+        return new PageUtils(this.page(new Query<AttrEntity>().getPage(params), wrapper));
+    }
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<AttrEntity> page = this.page(
@@ -81,7 +110,6 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         // 保存关联关系
         AttrAttrgroupRelationEntity relationEntity = new AttrAttrgroupRelationEntity();
         relationEntity.setAttrGroupId(attr.getAttrGroupId());
-        // System.out.println(attr.getAttrId());
         relationEntity.setAttrId(attrEntity.getAttrId());
         relationDao.insert(relationEntity);
     }

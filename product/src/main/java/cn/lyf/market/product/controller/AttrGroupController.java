@@ -36,7 +36,6 @@ public class AttrGroupController {
     AttrService attrService;
 
 
-
     /**
      * 列表 无id时获取所有,有id时获取对应分类
      */
@@ -91,12 +90,19 @@ public class AttrGroupController {
 
     @GetMapping("/{attrgroupId}/attr/relation")
     public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
-        List<AttrEntity> entities=attrService.getRelationAttr(attrgroupId);
-        return R.ok().put("data",entities);
+        List<AttrEntity> entities = attrService.getRelationAttr(attrgroupId);
+        return R.ok().put("data", entities);
     }
+
     @PostMapping("/attr/relation/delete")
-    public R deleteRelation(@RequestBody List<AttrGroupRelationVo>relationVos){
+    public R deleteRelation(@RequestBody List<AttrGroupRelationVo> relationVos) {
         attrService.deleteRelationAttr(relationVos);
         return R.ok();
+    }
+
+    @GetMapping("/{attrgroupId}/noattr/relation")
+    public R attrNoRelation(@PathVariable("attrgroupId") Long attrgroupId, @RequestParam Map<String, Object> params) {
+        PageUtils page = attrService.getNoRelationAttr(attrgroupId, params);
+        return R.ok().put("page", page);
     }
 }

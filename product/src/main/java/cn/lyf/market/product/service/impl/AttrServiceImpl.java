@@ -131,16 +131,18 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             if (attrAttrgroupRelation != null) {
                 respVo.setAttrGroupId(attrAttrgroupRelation.getAttrGroupId());
                 AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrId);
-                respVo.setGroupName(attrGroupEntity.getAttrGroupName());
+                if(attrGroupEntity!=null)respVo.setGroupName(attrGroupEntity.getAttrGroupName());
             }
         }
         // 设置分类信息
         Long catelogId = attrEntity.getCatelogId();
-        List<Long> catelogPath = categoryService.findCatelogPath(catelogId);
-        respVo.setCatelogPath(catelogPath);
-        CategoryEntity categoryEntity = categoryDao.selectById(catelogId);
-        if (categoryEntity != null) {
-            respVo.setCatelogName(categoryEntity.getName());
+        if(catelogId!=null){
+            List<Long> catelogPath = categoryService.findCatelogPath(catelogId);
+            respVo.setCatelogPath(catelogPath);
+            CategoryEntity categoryEntity = categoryDao.selectById(catelogId);
+            if (categoryEntity != null) {
+                respVo.setCatelogName(categoryEntity.getName());
+            }
         }
         return respVo;
     }

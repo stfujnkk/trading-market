@@ -7,6 +7,9 @@
     <name>market</name>
     <description>Trading Market implemented by Java</description>
     <packaging>pom</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
     <modules>
         <module>coupon</module>
         <module>member</module>

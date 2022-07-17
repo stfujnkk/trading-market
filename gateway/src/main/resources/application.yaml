@@ -16,12 +16,21 @@ spring:
           filters:
             - RewritePath=/api/thirdparty/(?<seg>.*),/$\{seg}
 
+        - id: member_route
+          uri: lb://member
+          predicates:
+            - Path=/api/member/**
+          filters:
+            - RewritePath=/api/(?<seg>.*),/$\{seg}
+# 其他转发给renren-fast
         - id: admin_route
           uri: lb://renren-fast
           predicates:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<seg>.*),/renren-fast/$\{seg}
+
+
 
 
 

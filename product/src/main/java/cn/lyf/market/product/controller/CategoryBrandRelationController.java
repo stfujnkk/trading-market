@@ -31,9 +31,29 @@ public class CategoryBrandRelationController {
      */
     @GetMapping("/catelog/list")
     public R catelogList(@RequestParam("brandId") Long brandId) {
-        QueryWrapper queryWrapper=new QueryWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId);
+        QueryWrapper queryWrapper = new QueryWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId);
         List<CategoryBrandRelationEntity> data = categoryBrandRelationService.list(queryWrapper);
         return R.ok().put("data", data);
+    }
+
+    /**
+     * 查出该分类的所有品牌
+     *
+     * @param catId 分类id
+     * @return
+     */
+    @GetMapping("/brands/list")
+    public R listBrands(@RequestParam("catId") Integer catId) {
+        /* SELECT brand_id,brand_name FROM pms_category_brand_relation
+         GROUP BY brand_id HAVING catelog_id = ? */
+        if (catId < 0) return R.error("catId为负数");
+        QueryWrapper<CategoryBrandRelationEntity> condition = new QueryWrapper<>();
+        if (catId > 0) {
+            // 查询特定分类的品牌
+            condition.eq("catelog_id", catId);
+        }
+        condition.groupBy("brand_id");
+        return R.ok().put("page", categoryBrandRelationService.listMaps(condition));
     }
 
     /**
@@ -43,7 +63,6 @@ public class CategoryBrandRelationController {
     //@RequiresPermissions("product:categorybrandrelation:list")
     public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = categoryBrandRelationService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 

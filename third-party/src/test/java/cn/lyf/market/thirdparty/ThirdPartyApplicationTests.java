@@ -14,7 +14,10 @@ class ThirdPartyApplicationTests {
 
     @Autowired
     OSS ossClient;
-
+    @Test
+    void ossInject() {
+        System.out.println(ossClient);
+    }
 
     @Test
     void contextLoads() {

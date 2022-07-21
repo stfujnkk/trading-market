@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -52,6 +53,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     public List<AttrEntity> getRelationAttr(Long attrgroupId) {
         List<AttrAttrgroupRelationEntity> relationEntities = relationDao.selectList(new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
         List<Long> attrIds = relationEntities.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+        if (attrIds.size() == 0)
+            return new ArrayList<>();
         return this.listByIds(attrIds);
     }
 
@@ -131,12 +134,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
             if (attrAttrgroupRelation != null) {
                 respVo.setAttrGroupId(attrAttrgroupRelation.getAttrGroupId());
                 AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrId);
-                if(attrGroupEntity!=null)respVo.setGroupName(attrGroupEntity.getAttrGroupName());
+                if (attrGroupEntity != null) respVo.setGroupName(attrGroupEntity.getAttrGroupName());
             }
         }
         // 设置分类信息
         Long catelogId = attrEntity.getCatelogId();
-        if(catelogId!=null){
+        if (catelogId != null) {
             List<Long> catelogPath = categoryService.findCatelogPath(catelogId);
             respVo.setCatelogPath(catelogPath);
             CategoryEntity categoryEntity = categoryDao.selectById(catelogId);

@@ -9,6 +9,7 @@ import cn.lyf.market.product.service.AttrGroupService;
 import cn.lyf.market.product.service.AttrService;
 import cn.lyf.market.product.service.CategoryService;
 import cn.lyf.market.product.vo.AttrGroupRelationVo;
+import cn.lyf.market.product.vo.GroupWithAttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +44,13 @@ public class AttrGroupController {
     public R addAttrGroupRelation(@RequestBody List<AttrGroupRelationVo> vos) {
         relationService.saveBatch(vos);
         return R.ok();
+    }
+
+    ///product/attrgroup/0/withattr
+    @GetMapping("/{cateId}/withattr")
+    public R queryWithAttr(@PathVariable(name = "cateId") Integer cateId) {
+        List<GroupWithAttrVo> vos= attrGroupService.queryGroupWithAttrs(cateId);
+        return R.ok().put("data",vos);
     }
 
 

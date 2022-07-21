@@ -1,9 +1,11 @@
 package cn.lyf.market.product.service;
 
+import cn.lyf.market.product.vo.GroupWithAttrVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.market.product.entity.AttrGroupEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,5 +20,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     PageUtils queryPage(Map<String, Object> params, Long catelogId);
+
+    List<GroupWithAttrVo> queryGroupWithAttrs(Integer cateId);
 }
 

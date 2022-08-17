@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients(basePackages = "cn.lyf.market.product.feign")
 public class ProductApplication {
 
     public static void main(String[] args) {

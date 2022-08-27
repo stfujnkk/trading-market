@@ -1,6 +1,9 @@
 package cn.lyf.market.ware.service.impl;
 
+import cn.lyf.common.utils.R;
+import cn.lyf.market.ware.feign.ProductFeignService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -18,6 +21,9 @@ import cn.lyf.market.ware.service.WareSkuService;
 
 @Service("wareSkuService")
 public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> implements WareSkuService {
+
+    @Autowired
+    ProductFeignService productFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -49,7 +55,16 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             wareSkuEntity.setWareId(wareId);
             wareSkuEntity.setStock(skuNum);
             wareSkuEntity.setStockLocked(0);
-            // TODO 通过feign获取skuName
+            // TODO 失败不回滚
+            try {
+                R info = productFeignService.info(skuId);
+                Map<String, Object> skuInfo = (Map<String, Object>) info.get("skuInfo");
+                if (info.getCode() == 0) {
+                    wareSkuEntity.setSkuName((String) skuInfo.get("skuName"));
+                }
+            } catch (Exception e) {
+                log.warn("skuName 获取失败 ," + e.getMessage());
+            }
             this.baseMapper.insert(wareSkuEntity);
         }
     }

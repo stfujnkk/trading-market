@@ -1,0 +1,28 @@
+### 领取采购单
+POST http://localhost:8600/api/ware/purchase/received
+Content-Type: application/json
+
+[
+  2
+]
+
+### 完成采购单
+POST http://localhost:8600/api/ware/purchase/done
+Content-Type: application/json
+
+{
+  "id": 2,
+  "items": [
+    {
+      "itemId": 1,
+      "status": 3,
+      "reason": ""
+    },
+    {
+      "itemId": 2,
+      "status": 4,
+      "reason": "无货"
+    }
+  ]
+}
+

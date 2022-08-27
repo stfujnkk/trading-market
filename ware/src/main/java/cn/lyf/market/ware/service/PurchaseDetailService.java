@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.market.ware.entity.PurchaseDetailEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ *
  *
  * @author lyf
  * @email 3365310020@qq.com
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface PurchaseDetailService extends IService<PurchaseDetailEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<PurchaseDetailEntity> listDetailByPurchaseId(Long id);
 }
 

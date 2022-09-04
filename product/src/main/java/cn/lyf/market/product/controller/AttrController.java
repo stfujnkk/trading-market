@@ -3,13 +3,16 @@ package cn.lyf.market.product.controller;
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.common.utils.R;
 import cn.lyf.market.product.entity.AttrEntity;
+import cn.lyf.market.product.entity.ProductAttrValueEntity;
 import cn.lyf.market.product.service.AttrService;
+import cn.lyf.market.product.service.ProductAttrValueService;
 import cn.lyf.market.product.vo.AttrRespVo;
 import cn.lyf.market.product.vo.AttrVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,6 +28,9 @@ import java.util.Map;
 public class AttrController {
     @Autowired
     private AttrService attrService;
+
+    @Autowired
+    ProductAttrValueService productAttrValueService;
 
     @GetMapping("/base/list/{catelogId}")
     public R baseAttrList(@RequestParam Map<String, Object> params, @PathVariable("catelogId") Long catelogId) {
@@ -87,6 +93,21 @@ public class AttrController {
     //@RequiresPermissions("product:attr:delete")
     public R delete(@RequestBody Long[] attrIds) {
         attrService.removeByIds(Arrays.asList(attrIds));
+        return R.ok();
+    }
+
+    @GetMapping("/base/listforspu/{spuId}")
+    public R baseAttrListForSpu(@PathVariable("spuId") Long spuId) {
+        List<ProductAttrValueEntity> entityList = productAttrValueService.baseAttrListForSpu(spuId);
+        return R.ok().put("data", entityList);
+    }
+
+    /**
+     * 修改某个spu下的规格
+     */
+    @PostMapping("/update/{spuId}")
+    public R updateSpuAttr(@PathVariable("spuId") Long spuId,@RequestBody List<ProductAttrValueEntity> entities) {
+        productAttrValueService.updateSpuAttr(spuId,entities);
         return R.ok();
     }
 

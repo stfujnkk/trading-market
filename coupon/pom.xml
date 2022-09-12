@@ -6,7 +6,7 @@
     <artifactId>coupon</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>coupon</name>
-    <description>Demo project for Spring Boot</description>
+    <description>优惠服务</description>
 
     <properties>
         <java.version>11</java.version>

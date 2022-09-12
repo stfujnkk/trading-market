@@ -6,7 +6,7 @@
     <artifactId>renren-fast</artifactId>
     <version>3.0.0</version>
     <packaging>jar</packaging>
-    <description>renren-fast</description>
+    <description>后台服务</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

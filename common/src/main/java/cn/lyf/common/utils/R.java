@@ -34,12 +34,12 @@ public class R<T> extends HashMap<String, Object> {
         return (T) super.get(DATA_KEY);
     }
 
-    public void setPage(List<T> ts) {
-        super.put(PAGE_KEY, ts);
+    public void setPage(PageUtils page) {
+        super.put(PAGE_KEY, page);
     }
 
-    public List<T> getPage() {
-        return (List<T>) super.get(PAGE_KEY);
+    public PageUtils getPage() {
+        return (PageUtils) super.get(PAGE_KEY);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class R<T> extends HashMap<String, Object> {
     public R put(String key, Object value) {
         switch (key) {
             case PAGE_KEY:
-                setPage((List<T>) value);
+                setPage((PageUtils) value);
             case DATA_KEY:
                 setData((T) value);
             default:

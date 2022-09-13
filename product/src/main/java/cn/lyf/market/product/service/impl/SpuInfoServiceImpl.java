@@ -2,6 +2,7 @@ package cn.lyf.market.product.service.impl;
 
 import cn.lyf.common.to.SkuReductionTo;
 import cn.lyf.common.to.SpuBoundTo;
+import cn.lyf.common.to.es.SkuEsModel;
 import cn.lyf.common.utils.R;
 import cn.lyf.market.product.entity.*;
 import cn.lyf.market.product.feign.CouponFeignService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +56,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Autowired
     CouponFeignService couponFeignService;
+
+    @Autowired
+    BrandService brandService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -193,6 +201,34 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 queryWrapper
         );
         return new PageUtils(page);
+    }
+
+    @Override
+    public void up(Long spuId) {
+        // 1) 组装需要的数据
+        List<SkuInfoEntity> skuInfoEntities=  skuInfoService.getSkusBySpuId(spuId);
+        // TODO 查询所有可以被检索的规格属性
+
+        // 2) 封装sku信息
+        List<SkuEsModel> upProducts = skuInfoEntities.stream().map(skuInfo -> {
+            SkuEsModel esModel = new SkuEsModel();
+            BeanUtils.copyProperties(skuInfo,esModel);
+            esModel.setSkuPrice(skuInfo.getPrice());
+            esModel.setSkuImg(skuInfo.getSkuDefaultImg());
+            // TODO 发送远程调用，判断是否有库存
+            // TODO 热度评分
+            // TODO 品牌和分类名字信息
+            BrandEntity brandEntity = brandService.getById(esModel.getBrandId());
+            esModel.setBrandName(brandEntity.getName());
+            esModel.setBrandImg(brandEntity.getLogo());
+
+            CategoryEntity categoryEntity = categoryService.getById(esModel.getCatalogId());
+            esModel.setCatalogName(categoryEntity.getName());
+
+            return esModel;
+        }).collect(Collectors.toList());
+        // TODO 发送给search 服务
+
     }
 
 }

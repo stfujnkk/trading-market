@@ -4,6 +4,7 @@ import cn.lyf.market.product.entity.SpuInfoEntity;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -66,6 +67,12 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
                 queryWrapper
         );
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<SkuInfoEntity> getSkusBySpuId(Long spuId) {
+        List<SkuInfoEntity> spuInfos = this.list(new QueryWrapper<SkuInfoEntity>().eq("spu_id", spuId));
+        return spuInfos;
     }
 
 }

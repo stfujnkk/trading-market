@@ -42,6 +42,11 @@ hs_err_pid*
 **/.idea
 **/HELP.md
 
+### nacos
 work/**
 derby.log
 logs/**
+
+### jrebel
+**/rebel.xml
+

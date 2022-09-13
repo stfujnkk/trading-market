@@ -5,7 +5,6 @@ import cn.lyf.common.utils.JsonUtils;
 import cn.lyf.market.search.config.ElasticSearchConfig;
 import cn.lyf.market.search.constant.EsConstant;
 import cn.lyf.market.search.service.ProductSaveService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -28,6 +27,7 @@ public class ProductSaveServiceImpl implements ProductSaveService {
 
     @Override
     public boolean productStatusUp(List<SkuEsModel> skuEsModels) throws IOException {
+        if (skuEsModels.size() == 0) return true;
         // 1、给es建立索引
         BulkRequest bulkRequest = new BulkRequest();
         for (SkuEsModel skuEsModel : skuEsModels) {
@@ -44,6 +44,5 @@ public class ProductSaveServiceImpl implements ProductSaveService {
             return false;
         }
         return true;
-
     }
 }

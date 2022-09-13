@@ -9,10 +9,11 @@
 package cn.lyf.common.utils;
 
 import cn.lyf.common.exception.BaseCodeEnum;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,38 +21,22 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
-public class R<T> extends HashMap<String, Object> {
+public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     public static final String DATA_KEY = "data";
-    public static final String PAGE_KEY = "page";
 
-    public void setData(T t) {
+    public void setData(Object t) {
         super.put(DATA_KEY, t);
     }
 
-    public T getData() {
-        return (T) super.get(DATA_KEY);
-    }
-
-    public void setPage(PageUtils page) {
-        super.put(PAGE_KEY, page);
-    }
-
-    public PageUtils getPage() {
-        return (PageUtils) super.get(PAGE_KEY);
-    }
-
-    @Override
-    public Object get(Object key) {
-        String k = (String) key;
-        switch (k) {
-            case PAGE_KEY:
-                return getPage();
-            case DATA_KEY:
-                return getData();
-            default:
-                return super.get(key);
+    public <E> E getData(TypeReference<E> typeReference) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String s = mapper.writeValueAsString(super.get(DATA_KEY));
+            return mapper.readValue(s, typeReference);
+        } catch (Exception e) {
+            return null;
         }
     }
 
@@ -96,14 +81,7 @@ public class R<T> extends HashMap<String, Object> {
     }
 
     public R put(String key, Object value) {
-        switch (key) {
-            case PAGE_KEY:
-                setPage((PageUtils) value);
-            case DATA_KEY:
-                setData((T) value);
-            default:
-                super.put(key, value);
-        }
+        super.put(key, value);
         return this;
     }
 

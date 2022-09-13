@@ -11,6 +11,8 @@ import cn.lyf.market.product.feign.SearchFeignService;
 import cn.lyf.market.product.feign.WareFeignService;
 import cn.lyf.market.product.service.*;
 import cn.lyf.market.product.vo.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,7 @@ import cn.lyf.common.utils.Query;
 import cn.lyf.market.product.dao.SpuInfoDao;
 import org.springframework.transaction.annotation.Transactional;
 
-
+@Slf4j
 @Service("spuInfoService")
 public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> implements SpuInfoService {
 
@@ -213,6 +215,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     public void up(Long spuId) {
         // 1) 组装需要的数据
         List<SkuInfoEntity> skuInfoEntities = skuInfoService.getSkusBySpuId(spuId);
+        if (skuInfoEntities.size() == 0) {
+            log.error("spuId为{}的商品没有对应的sku", spuId);
+            throw new RuntimeException("商品没有对应的sku");
+        }
         // 查询所有可以被检索的规格属性
         List<ProductAttrValueEntity> baseAttrs = attrValueService.baseAttrListForSpu(spuId);
         List<Long> attrIds = baseAttrs.stream().map(attr -> attr.getAttrId()).collect(Collectors.toList());
@@ -230,13 +236,12 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<Long> skuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
         Map<Long, Boolean> stockMap = null;
         try {
-            R<List<SkuHasStockVo>> skusHasStock = wareFeignService.getSkusHasStock(skuIds);
-            stockMap = skusHasStock.getData().stream().collect(
-                    Collectors.toMap(
-                            SkuHasStockVo::getSkuId,
-                            SkuHasStockVo::getHasStock
-                    )
-            );
+            R skusHasStock = wareFeignService.getSkusHasStock(skuIds);
+            stockMap = skusHasStock.getData(new TypeReference<List<SkuHasStockVo>>() {
+            }).stream().collect(Collectors.toMap(
+                    SkuHasStockVo::getSkuId,
+                    SkuHasStockVo::getHasStock
+            ));
         } catch (Exception e) {
             log.error("库存服务查询异常 {}", e);
         }
@@ -255,11 +260,16 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esModel.setBrandName(brandEntity.getName());
             esModel.setBrandImg(brandEntity.getLogo());
             // 设置是否有库存
-            esModel.setHasStock(finalStockMap == null ? false : finalStockMap.get(skuInfo.getSkuId()));
+            if (finalStockMap == null || finalStockMap.get(skuInfo.getSkuId()) == null) {
+                esModel.setHasStock(false);
+            } else {
+                esModel.setHasStock(finalStockMap.get(skuInfo.getSkuId()));
+            }
             CategoryEntity categoryEntity = categoryService.getById(esModel.getCatalogId());
             esModel.setCatalogName(categoryEntity.getName());
             // 设置检索属性
             esModel.setAttrs(attrsList);
+            log.debug(esModel.toString());
             return esModel;
         }).collect(Collectors.toList());
 
@@ -267,7 +277,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         if (0 == r.getCode()) {
             // 发布成功,修改spu状态
             baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
-        }else {
+        } else {
             // TODO　重复调用？接口幂等性。重试机制
         }
     }

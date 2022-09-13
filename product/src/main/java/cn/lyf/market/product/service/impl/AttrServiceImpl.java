@@ -94,6 +94,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
     @Override
     public List<Long> selectAttrIds(List<Long> attrIds) {
+        if (attrIds.size() == 0) return new ArrayList<>();
         return this.baseMapper.selectAttrIds(attrIds);
     }
 

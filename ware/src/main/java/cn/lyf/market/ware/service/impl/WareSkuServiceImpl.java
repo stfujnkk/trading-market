@@ -2,11 +2,14 @@ package cn.lyf.market.ware.service.impl;
 
 import cn.lyf.common.utils.R;
 import cn.lyf.market.ware.feign.ProductFeignService;
+import cn.lyf.market.ware.vo.SkuHasStockVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -67,6 +70,11 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             }
             this.baseMapper.insert(wareSkuEntity);
         }
+    }
+
+    @Override
+    public List<SkuHasStockVo> getSkusHasStock(List<Long> skuIds) {
+        return this.baseMapper.getSkusHasStock(skuIds);
     }
 
 }

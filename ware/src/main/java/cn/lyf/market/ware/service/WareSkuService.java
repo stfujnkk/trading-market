@@ -1,9 +1,11 @@
 package cn.lyf.market.ware.service;
 
+import cn.lyf.market.ware.vo.SkuHasStockVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.market.ware.entity.WareSkuEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,5 +26,7 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @param skuNum 数量
      */
     void addStock(Long skuId, Long wareId, Integer skuNum);
+
+    List<SkuHasStockVo> getSkusHasStock(List<Long> skuIds);
 }
 

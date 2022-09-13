@@ -6,6 +6,7 @@ import cn.lyf.common.to.es.SkuEsModel;
 import cn.lyf.common.utils.R;
 import cn.lyf.market.product.entity.*;
 import cn.lyf.market.product.feign.CouponFeignService;
+import cn.lyf.market.product.feign.WareFeignService;
 import cn.lyf.market.product.service.*;
 import cn.lyf.market.product.vo.*;
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +60,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    WareFeignService wareFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -217,20 +221,36 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                     return attrs;
                 })
                 .collect(Collectors.toList());
+        // 发送远程调用，判断是否有库存
+        List<Long> skuIds = skuInfoEntities.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
+        Map<Long, Boolean> stockMap = null;
+        try {
+            R<List<SkuHasStockVo>> skusHasStock = wareFeignService.getSkusHasStock(skuIds);
+            stockMap = skusHasStock.getData().stream().collect(
+                    Collectors.toMap(
+                            SkuHasStockVo::getSkuId,
+                            SkuHasStockVo::getHasStock
+                    )
+            );
+        } catch (Exception e) {
+            log.error("库存服务查询异常 {}", e);
+        }
+
+        final Map<Long, Boolean> finalStockMap = stockMap;
         // 2) 封装sku信息
         List<SkuEsModel> upProducts = skuInfoEntities.stream().map(skuInfo -> {
             SkuEsModel esModel = new SkuEsModel();
             BeanUtils.copyProperties(skuInfo, esModel);
             esModel.setSkuPrice(skuInfo.getPrice());
             esModel.setSkuImg(skuInfo.getSkuDefaultImg());
-            // TODO 发送远程调用，判断是否有库存
             // TODO 热度评分
             esModel.setHotScore(0L);
             // 品牌和分类名字信息
             BrandEntity brandEntity = brandService.getById(esModel.getBrandId());
             esModel.setBrandName(brandEntity.getName());
             esModel.setBrandImg(brandEntity.getLogo());
-
+            // 设置是否有库存
+            esModel.setHasStock(finalStockMap == null ? false : finalStockMap.get(skuInfo.getSkuId()));
             CategoryEntity categoryEntity = categoryService.getById(esModel.getCatalogId());
             esModel.setCatalogName(categoryEntity.getName());
             // 设置检索属性

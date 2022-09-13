@@ -20,5 +20,22 @@
               ware_id = #{ware_id}
               and sku_id = #{sku_id}
     </update>
+    <select id="getSkusHasStock" resultType="cn.lyf.market.ware.vo.SkuHasStockVo">
+        SELECT
+            sku_id,
+            sum (
+                stock -
+                IFNULL (
+                    stock_locked,
+                    0
+                )
+            ) > 0 AS has_stock
+        FROM wms_ware_sku
+        WHERE sku_id IN
+              <foreach item="skuId" collection="skuIds" open="(" separator="," close=")">
+                #{skuId}
+              </foreach>
+        GROUP BY sku_id
+    </select>
 
 </mapper>

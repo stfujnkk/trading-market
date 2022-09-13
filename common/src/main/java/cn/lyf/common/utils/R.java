@@ -8,6 +8,7 @@
 
 package cn.lyf.common.utils;
 
+import cn.lyf.common.exception.BaseCodeEnum;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
@@ -65,6 +66,10 @@ public class R<T> extends HashMap<String, Object> {
 
     public static R error(String msg) {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
+    }
+
+    public static R error(BaseCodeEnum baseCodeEnum) {
+        return R.error(baseCodeEnum.code, baseCodeEnum.msg);
     }
 
     public static R error(int code, String msg) {

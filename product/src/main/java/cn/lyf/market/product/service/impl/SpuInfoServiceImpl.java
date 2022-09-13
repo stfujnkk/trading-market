@@ -1,11 +1,13 @@
 package cn.lyf.market.product.service.impl;
 
+import cn.lyf.common.constant.ProductConstant;
 import cn.lyf.common.to.SkuReductionTo;
 import cn.lyf.common.to.SpuBoundTo;
 import cn.lyf.common.to.es.SkuEsModel;
 import cn.lyf.common.utils.R;
 import cn.lyf.market.product.entity.*;
 import cn.lyf.market.product.feign.CouponFeignService;
+import cn.lyf.market.product.feign.SearchFeignService;
 import cn.lyf.market.product.feign.WareFeignService;
 import cn.lyf.market.product.service.*;
 import cn.lyf.market.product.vo.*;
@@ -63,6 +65,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     @Autowired
     WareFeignService wareFeignService;
+
+    @Autowired
+    SearchFeignService searchFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -257,8 +262,14 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esModel.setAttrs(attrsList);
             return esModel;
         }).collect(Collectors.toList());
-        // TODO 发送给search 服务
 
+        R r = searchFeignService.productStatusUp(upProducts);
+        if (0 == r.getCode()) {
+            // 发布成功,修改spu状态
+            baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
+        }else {
+            // TODO　重复调用？接口幂等性。重试机制
+        }
     }
 
 }

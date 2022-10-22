@@ -84,7 +84,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Override
     public Map<String, List<Catalog2Vo>> getCatalogJson() {
         List<CategoryEntity> level1Categorys = getLevel1Categorys();
-        level1Categorys.stream().collect(Collectors.toMap(
+        return level1Categorys.stream().collect(Collectors.toMap(
                 item -> item.getCatId().toString(),
                 catalog1 -> {
                     List<CategoryEntity> catalog2List = baseMapper.selectList((new QueryWrapper<CategoryEntity>().eq("parent_cid", catalog1.getCatId())));
@@ -111,9 +111,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                     }
                     return catalog2VoList;
                 }));
-
-
-        return null;
     }
 
     private void findParentCatelogId(List<Long> ans, Long catelogId) {

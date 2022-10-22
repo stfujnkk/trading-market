@@ -2,6 +2,7 @@ package cn.lyf.market.product.service;
 
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.market.product.entity.CategoryEntity;
+import cn.lyf.market.product.vo.Catalog2Vo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -30,5 +31,9 @@ public interface CategoryService extends IService<CategoryEntity> {
     List<Long> findCatelogPath(Long catelogId);
 
     void updateCascade(CategoryEntity category);
+
+    List<CategoryEntity> getLevel1Categorys();
+
+    Map<String, List<Catalog2Vo>> getCatalogJson();
 }
 

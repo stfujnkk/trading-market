@@ -6,6 +6,7 @@ import cn.lyf.market.product.dao.CategoryDao;
 import cn.lyf.market.product.entity.CategoryEntity;
 import cn.lyf.market.product.service.CategoryBrandRelationService;
 import cn.lyf.market.product.service.CategoryService;
+import cn.lyf.market.product.vo.Catalog2Vo;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -72,6 +73,47 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public void updateCascade(CategoryEntity category) {
         baseMapper.updateById(category);
         categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+    }
+
+    @Override
+    public List<CategoryEntity> getLevel1Categorys() {
+        List<CategoryEntity> categoryEntities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+        return categoryEntities;
+    }
+
+    @Override
+    public Map<String, List<Catalog2Vo>> getCatalogJson() {
+        List<CategoryEntity> level1Categorys = getLevel1Categorys();
+        level1Categorys.stream().collect(Collectors.toMap(
+                item -> item.getCatId().toString(),
+                catalog1 -> {
+                    List<CategoryEntity> catalog2List = baseMapper.selectList((new QueryWrapper<CategoryEntity>().eq("parent_cid", catalog1.getCatId())));
+                    List<Catalog2Vo> catalog2VoList = null;
+                    if (catalog2List != null) {
+                        // 有二级分类
+                        catalog2VoList = catalog2List.stream().map(catalog2 -> {
+                            Catalog2Vo catalog2Vo = new Catalog2Vo(catalog1.getCatId().toString(), null, catalog2.getCatId().toString(), catalog2.getName());
+                            List<CategoryEntity> catalog3List = baseMapper.selectList((new QueryWrapper<CategoryEntity>().eq("parent_cid", catalog2.getCatId())));
+                            if (catalog3List != null) {
+                                // 有三级分类
+                                List<Catalog2Vo.Catalog3Vo> catalog3VoList = catalog3List.stream().map(catalog3 -> {
+                                    Catalog2Vo.Catalog3Vo catalog3Vo = new Catalog2Vo.Catalog3Vo(
+                                            catalog2.getCatId().toString(),
+                                            catalog3.getCatId().toString(),
+                                            catalog3.getName()
+                                    );
+                                    return catalog3Vo;
+                                }).collect(Collectors.toList());
+                                catalog2Vo.setCatalog3List(catalog3VoList);
+                            }
+                            return catalog2Vo;
+                        }).collect(Collectors.toList());
+                    }
+                    return catalog2VoList;
+                }));
+
+
+        return null;
     }
 
     private void findParentCatelogId(List<Long> ans, Long catelogId) {

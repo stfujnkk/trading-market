@@ -29,13 +29,18 @@ spring:
             - Path=/api/member/**
           filters:
             - RewritePath=/api/(?<seg>.*),/$\{seg}
-# 其他转发给renren-fast
+        # 其他api转发给renren-fast
         - id: admin_route
           uri: lb://renren-fast
           predicates:
             - Path=/api/**
           filters:
             - RewritePath=/api/(?<seg>.*),/renren-fast/$\{seg}
+        # 域名配置
+        - id: host_route
+          uri: lb://product
+          predicates:
+            - Host=**.jmall.com,jmall.com
 
 
 

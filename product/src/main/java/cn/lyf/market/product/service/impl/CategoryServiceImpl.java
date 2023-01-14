@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -93,13 +94,18 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	public Map<String, List<Catalog2Vo>> getCatalogJson() {
 		// Netty有堆外内存泄露问题
 		final ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+		final ObjectMapper mapper = new ObjectMapper();
 		String catalogCache = ops.get("CatalogJson");
-		ObjectMapper mapper = new ObjectMapper();
 		try {
 			if (StringUtils.isEmpty(catalogCache)) {
-				Map<String, List<Catalog2Vo>> catalogJson = getCatalogJsonFromDB();
-				ops.set("CatalogJson", mapper.writeValueAsString(catalogJson));
-				return catalogJson;
+				synchronized (this) {
+					catalogCache = ops.get("CatalogJson");
+					if (StringUtils.isEmpty(catalogCache)) {
+						Map<String, List<Catalog2Vo>> catalogJson = getCatalogJsonFromDB();
+						catalogCache = catalogJson == null ? "{}" : mapper.writeValueAsString(catalogJson);
+						ops.set("CatalogJson", catalogCache, 60, TimeUnit.SECONDS);
+					}
+				}
 			}
 			return mapper.readValue(catalogCache, Map.class);
 		} catch (JsonProcessingException e) {
@@ -109,6 +115,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	}
 
 	Map<String, List<Catalog2Vo>> getCatalogJsonFromDB() {
+		System.out.println("查询数据库。。。");
 		// TODO 减少查询数据库次数
 		List<CategoryEntity> level1Categorys = getLevel1Categorys();
 		return level1Categorys.stream().collect(Collectors.toMap(

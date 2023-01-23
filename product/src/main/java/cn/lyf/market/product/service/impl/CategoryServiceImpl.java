@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 		categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
 	}
 
+	/**
+	 * https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#cache-spel-context
+	 *
+	 * @return
+	 */
+	@Cacheable(value = {"category"}, key = "#root.method.name")
 	@Override
 	public List<CategoryEntity> getLevel1Categorys() {
 		List<CategoryEntity> categoryEntities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
@@ -115,7 +122,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	}
 
 	Map<String, List<Catalog2Vo>> getCatalogJsonFromDB() {
-		System.out.println("查询数据库。。。");
 		// TODO 减少查询数据库次数
 		List<CategoryEntity> level1Categorys = getLevel1Categorys();
 		return level1Categorys.stream().collect(Collectors.toMap(

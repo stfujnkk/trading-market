@@ -20,7 +20,10 @@ spring:
   cache:
     type: redis
     redis:
-      time-to-live: 600000
+      time-to-live: 600000 # 10min
+      cache-null-values: true # 缓存空值
+#      key-prefix: CACHE_
+      use-key-prefix: true
 
 server:
   port: 8400

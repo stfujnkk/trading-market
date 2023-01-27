@@ -609,11 +609,12 @@
 
 </body>
 <script type="text/javascript">
-    function search() {
-        var keyword = $("#searchText").val()
-        window.location.href = "http://search.gulimall.com/search.html?keyword=" + keyword;
-    }
+    const SEARCH_HOST = '127.0.0.1:7785'
 
+    function search() {
+        var keyword = $("#searchText").val();
+        window.location.href = `http://${SEARCH_HOST}/list.html?keyword=${keyword}`;
+    }
 </script>
 <script type="text/javascript" src="index/js/text.js"></script>
 <script type="text/javascript" src="index/js/header.js"></script>

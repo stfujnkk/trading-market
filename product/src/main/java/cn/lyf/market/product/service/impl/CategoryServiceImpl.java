@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -79,6 +80,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	}
 
 	@Override
+	@CacheEvict(value = "category", allEntries = true)
 	//级联更新关系表
 	public void updateCascade(CategoryEntity category) {
 		baseMapper.updateById(category);
@@ -90,7 +92,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	 *
 	 * @return
 	 */
-	@Cacheable(value = {"category"}, key = "#root.method.name")
+	@Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
 	@Override
 	public List<CategoryEntity> getLevel1Categorys() {
 		List<CategoryEntity> categoryEntities = baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));

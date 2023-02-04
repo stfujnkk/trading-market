@@ -1,0 +1,5 @@
+### 查询
+GET http://localhost:7785/list.html?hasStock=false&keyword={{keyword}}&catalog3Id={{catalog3Id}}&sort={{sort}}&skuPrice={{skuPrice}}&brandId={{brandId1}}&attrs={{attrs}}&brandId={{brandId2}}
+
+###
+GET http://localhost:7785/list.html?hasStock=false

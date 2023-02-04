@@ -15,7 +15,8 @@ public class SearchParam {
 	 * sort=hotScore_asc/desc
 	 */
 	private String sort;
-	private Boolean hasStock;
+
+	private Boolean hasStock = true;
 	/**
 	 * skuPrice=100_200/_200/100_
 	 */
@@ -25,5 +26,5 @@ public class SearchParam {
 	 * attrs=1_其他:安卓&attrs=2_10G
 	 */
 	private List<String> attrs;
-	private Integer pageNum;
+	private Integer pageNum = 1;
 }

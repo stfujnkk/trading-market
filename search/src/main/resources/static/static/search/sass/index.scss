@@ -1590,10 +1590,11 @@ html {
                   margin-right: 5px;
                   border:1px solid #ddd;
                 }
-                a:nth-child(1){
-                  color: #ccc;
-                  background: #fff
-                }
+                ////不需要css控制显示当前页的效果
+                //a:nth-child(1){
+                //  color: #ccc;
+                //  background: #fff
+                //}
               }
               .page_span2{
                 em{

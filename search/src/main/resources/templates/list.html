@@ -1045,12 +1045,17 @@
                 <div class="filter">
                     <!--综合排序-->
                     <div class="filter_top">
-                        <div class="filter_top_left">
+                        <div class="filter_top_left" th:with="priceRange=${param.skuPrice}">
                             <a class="sort_a" sort="hotScore" href="#">综合排序</a>
                             <a class="sort_a" sort="saleCount" href="#">销量</a>
                             <a class="sort_a" sort="skuPrice" href="#">价格</a>
-                            <a class="sort_a" sort="" href="#">评论分</a>
-                            <a class="sort_a" sort="" href="#">上架时间</a>
+                            <!-- <a class="sort_a" sort="" href="#">评论分</a>-->
+                            <!-- <a class="sort_a" sort="" href="#">上架时间</a>-->
+                            <input id="skuPriceSearchFrom" type="number" style="width: 100px;margin-left:5px;"
+                                   th:value="${#strings.isEmpty(priceRange)?'':#strings.substringBefore(priceRange,'_')}"/>
+                            - <input id="skuPriceSearchTo" type="number" style="width: 100px;margin-right:5px;"
+                                     th:value="${#strings.isEmpty(priceRange)?'':#strings.substringAfter(priceRange,'_')}"/>
+                            <button id="skuPriceSearchBtn">确定</button>
                         </div>
                         <div class="filter_top_right">
                             <span class="fp-text">
@@ -1160,7 +1165,7 @@
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <i></i>
+                                        <input id="showHasStock" type="checkbox" th:checked="${param.hasStock}"/>
                                         仅显示有货
                                     </a>
                                 </li>
@@ -2052,18 +2057,47 @@
     $('.sort_a').each(function () {
         let url = new URL(location.href);
         let sort = $(this).attr('sort')
-        const [sortType, order] = url.searchParams.get('sort').split('_')
+        let sortParam = url.searchParams.get('sort')
 
-        if (sort.startsWith(sortType)) {
-            //选中
-            $(this).css({"color": "#FFF", "border-color": "#e4393c", "background": "#e4393c"});
-            $(this).text($(this).text() + (order == 'desc' ? '↓' : '↑'));
-            $(this).addClass(order == 'desc' ? 'desc' : 'asc');
+        if (sortParam) {
+            const [sortType, order] = url.searchParams.get('sort').split('_')
+
+            if (sort.startsWith(sortType)) {
+                //选中
+                $(this).css({"color": "#FFF", "border-color": "#e4393c", "background": "#e4393c"});
+                $(this).text($(this).text() + (order == 'desc' ? '↓' : '↑'));
+                $(this).addClass(order == 'desc' ? 'desc' : 'asc');
+            } else {
+                $(this).css({"color": "#333", "border-color": "#CCC", "background": "#FFF"});
+            }
         } else {
             $(this).css({"color": "#333", "border-color": "#CCC", "background": "#FFF"});
         }
+
     })
 
+    $('#skuPriceSearchBtn').click(function () {
+        let from = $('#skuPriceSearchFrom').val()
+        let to = $('#skuPriceSearchTo').val()
+        let skuPrice = `${from}_${to}`
+
+        let url = new URL(location.href);
+        url.searchParams.set('skuPrice', skuPrice)
+        location.href = url.href;
+    })
+
+
+    $('#showHasStock').change(function () {
+        let url = new URL(location.href);
+        if ($(this).prop('checked')) {
+            // 只选择有库存
+            url.searchParams.set('hasStock', true)
+        } else {
+            url.searchParams.delete('hasStock')
+        }
+        console.log(url.href)
+        location.href = url.href;
+    })
 
 </script>
 </body>

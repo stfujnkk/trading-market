@@ -16,7 +16,7 @@ public class SearchParam {
 	 */
 	private String sort;
 
-	private Boolean hasStock = true;
+	private Boolean hasStock;
 	/**
 	 * skuPrice=100_200/_200/100_
 	 */

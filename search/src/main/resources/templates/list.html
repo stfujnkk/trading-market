@@ -762,6 +762,26 @@
                 <a href="#">游戏手机</a>
             </div>
         </div>
+
+        <div class="JD_ipone_one c">
+            <a th:each="filter:${result.filters}" th:attr="fid=${filter.id},fval=${filter.value}"
+               th:href="'javascript:removeAttrFilter(\''+${filter.id}+'\',\''+${filter.value}+'\')'"
+            >
+                <span th:text="${filter.name}"/>：<span th:text="${filter.value}"/>×
+            </a>
+            <!--            <a href="#" class="qqq">手机 <img src="/static/search/image/down-@1x.png" alt=""></a>-->
+            <!--            <div>-->
+            <!--                <a href="#">手机</a>-->
+            <!--                <a href="#">老人机</a>-->
+            <!--                <a href="#">对讲机</a>-->
+            <!--                <a href="#">女性手机</a>-->
+            <!--                <a href="#">超续航手机</a>-->
+            <!--                <a href="#">全面屏手机</a>-->
+            <!--                <a href="#">拍照手机</a>-->
+            <!--                <a href="#">游戏手机</a>-->
+            <!--            </div>-->
+        </div>
+
         <i><img src="/static/search/image/right-@1x.png" alt=""></i>
     </div>
 </div>
@@ -2098,6 +2118,73 @@
         console.log(url.href)
         location.href = url.href;
     })
+
+    /**
+     * 添加属性过滤
+     * @param attrId {string}
+     * @param value {string}
+     */
+    function addAttrFilter(attrId, value) {
+        let attrFilterMap = getAttrFilterMap()
+
+        let values = attrFilterMap.get(attrId) || new Set();
+        if (values.has(value)) return;
+        values.add(value)
+        attrFilterMap.set(attrId, values)
+
+        location.href = setAttrFilterMap(attrFilterMap);
+    }
+
+    /**
+     * 去除属性过滤
+     * @param attrId {string}
+     * @param value {string}
+     */
+    function removeAttrFilter(attrId, value) {
+        let attrFilterMap = getAttrFilterMap()
+
+        let values = attrFilterMap.get(attrId) || new Set();
+        if (!values.has(value)) return;
+        values.delete(value)
+        attrFilterMap.set(attrId, values)
+
+        location.href = setAttrFilterMap(attrFilterMap);
+    }
+
+    /**
+     * 获取属性过滤
+     * @param link {string}
+     * @returns {Map<string, Set<string>>}
+     */
+    function getAttrFilterMap(link = null) {
+        let url = new URL(link || location.href);
+        let attrFilterMap = new Map();
+        let attrs = url.searchParams.getAll('attrs')
+        if (!attrs || attrs.length == 0) return attrFilterMap;
+        for (let attr of attrs) {
+            const [attrId, values] = attr.split('_')
+            attrFilterMap.set(attrId, new Set(values.split(':')))
+        }
+        return attrFilterMap;
+    }
+
+    /**
+     * 设置属性过滤
+     * @param attrFilterMap {Map<string, Set<string>>}
+     * @param link {string}
+     * @returns {string}
+     */
+    function setAttrFilterMap(attrFilterMap, link = null) {
+        let url = new URL(link || location.href);
+
+        url.searchParams.delete('attrs')
+        attrFilterMap.forEach((value, key) => {
+            let v = `${key}_${[...value].join(':')}`
+            if (!v.endsWith('_')) url.searchParams.append('attrs', v);
+        })
+
+        return url.href;
+    }
 
 </script>
 </body>

@@ -1,12 +1,16 @@
 package cn.lyf.market.search.service.impl;
 
 import cn.lyf.common.to.es.SkuEsModel;
+import cn.lyf.common.utils.R;
 import cn.lyf.market.search.config.ElasticSearchConfig;
 import cn.lyf.market.search.constant.EsConstant;
+import cn.lyf.market.search.feign.ProductFeignService;
 import cn.lyf.market.search.service.MallSearchService;
+import cn.lyf.market.search.vo.AttrVo;
 import cn.lyf.market.search.vo.SearchParam;
 import cn.lyf.market.search.vo.SearchResult;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequest;
@@ -46,6 +50,9 @@ public class MallSearchServiceImpl implements MallSearchService {
 	@Autowired
 	private RestHighLevelClient client;
 
+	@Autowired
+	ProductFeignService productFeignService;
+
 	@Override
 	public SearchResult search(SearchParam param) {
 		// 构建es查询语句
@@ -56,6 +63,31 @@ public class MallSearchServiceImpl implements MallSearchService {
 			// 封装数据为指定格式
 			result = buildSearchResult(response);
 			result.setPageNum(param.getPageNum());
+
+			// TODO 属性应该改为从ElasticSearch获取
+			if (null != param.getAttrs()) {
+				List<SearchResult.Filter> filters = new ArrayList<>();
+				param.getAttrs().forEach(attr -> {
+					String[] s = attr.split("_");
+					final Long attrId = Long.parseLong(s[0]);
+					final String[] attrValues = s[1].split(":");
+
+					R r = productFeignService.attrInfo(attrId);
+					AttrVo attrvo = R.convertTo(r.get("attr"), new TypeReference<>() {
+					});
+
+					for (String value : attrValues) {
+						SearchResult.Filter filter = new SearchResult.Filter();
+						filter.setId(attrId);
+						filter.setName(attrvo.getAttrName());
+						filter.setValue(value);
+						filters.add(filter);
+					}
+				});
+				result.setFilters(filters);
+			}
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

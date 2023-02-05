@@ -15,6 +15,14 @@ public class SearchResult {
 	private List<BrandVo> brands;
 	private List<AttrVo> attrs;
 	private List<CatalogVo> catalogs;
+	private List<Filter> filters;
+
+	@Data
+	public static class Filter {
+		private Long id;
+		private String name;
+		private String value;
+	}
 
 	@Data
 	public static class BrandVo {

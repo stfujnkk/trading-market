@@ -9,7 +9,9 @@
 package cn.lyf.common.utils;
 
 import cn.lyf.common.exception.BaseCodeEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpStatus;
 
@@ -22,74 +24,81 @@ import java.util.Map;
  * @author Mark sunlightcs@gmail.com
  */
 public class R extends HashMap<String, Object> {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public static final String DATA_KEY = "data";
+	public static final String DATA_KEY = "data";
 
-    public void setData(Object t) {
-        super.put(DATA_KEY, t);
-    }
+	public void setData(Object t) {
+		super.put(DATA_KEY, t);
+	}
 
-    public <E> E getData(TypeReference<E> typeReference) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            String s = mapper.writeValueAsString(super.get(DATA_KEY));
-            return mapper.readValue(s, typeReference);
-        } catch (Exception e) {
-            return null;
-        }
-    }
+	public <E> E getData(TypeReference<E> typeReference) {
+		return convertTo(super.get(DATA_KEY), typeReference);
+	}
 
-    public R() {
-        put("code", 0);
-        put("msg", "success");
-    }
+	public static <E> E convertTo(Object data, TypeReference<E> typeReference) {
+		if (typeReference == null) return null;
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		try {
+			String s = mapper.writeValueAsString(data);
+			return mapper.readValue(s, typeReference);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    public static R error() {
-        return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
-    }
+	public R() {
+		put("code", 0);
+		put("msg", "success");
+	}
 
-    public static R error(String msg) {
-        return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
-    }
+	public static R error() {
+		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
+	}
 
-    public static R error(BaseCodeEnum baseCodeEnum) {
-        return R.error(baseCodeEnum.code, baseCodeEnum.msg);
-    }
+	public static R error(String msg) {
+		return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, msg);
+	}
 
-    public static R error(int code, String msg) {
-        R r = new R();
-        r.put("code", code);
-        r.put("msg", msg);
-        return r;
-    }
+	public static R error(BaseCodeEnum baseCodeEnum) {
+		return R.error(baseCodeEnum.code, baseCodeEnum.msg);
+	}
 
-    public static R ok(String msg) {
-        R r = new R();
-        r.put("msg", msg);
-        return r;
-    }
+	public static R error(int code, String msg) {
+		R r = new R();
+		r.put("code", code);
+		r.put("msg", msg);
+		return r;
+	}
 
-    public static R ok(Map<String, Object> map) {
-        R r = new R();
-        r.putAll(map);
-        return r;
-    }
+	public static R ok(String msg) {
+		R r = new R();
+		r.put("msg", msg);
+		return r;
+	}
 
-    public static R ok() {
-        return new R();
-    }
+	public static R ok(Map<String, Object> map) {
+		R r = new R();
+		r.putAll(map);
+		return r;
+	}
 
-    public R put(String key, Object value) {
-        super.put(key, value);
-        return this;
-    }
+	public static R ok() {
+		return new R();
+	}
 
-    public Integer getCode() {
-        return (Integer) get("code");
-    }
+	public R put(String key, Object value) {
+		super.put(key, value);
+		return this;
+	}
 
-    public String getMsg() {
-        return (String) get("msg");
-    }
+	public Integer getCode() {
+		return (Integer) get("code");
+	}
+
+	public String getMsg() {
+		return (String) get("msg");
+	}
 }

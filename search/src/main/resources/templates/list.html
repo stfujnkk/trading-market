@@ -762,24 +762,12 @@
                 <a href="#">游戏手机</a>
             </div>
         </div>
-
         <div class="JD_ipone_one c">
-            <a th:each="filter:${result.filters}" th:attr="fid=${filter.id},fval=${filter.value}"
-               th:href="'javascript:removeAttrFilter(\''+${filter.id}+'\',\''+${filter.value}+'\')'"
+            <a th:each="filter:${result.filters}"
+               th:href="'javascript:removeFilter(\''+${filter.key}+'\',\''+${filter.value}+'\','+${filter.id}+','+${filter.isList}+')'"
             >
-                <span th:text="${filter.name}"/>：<span th:text="${filter.value}"/>×
+                <span th:text="${filter.name}"/>：<span th:text="${filter.showValue}"/>×
             </a>
-            <!--            <a href="#" class="qqq">手机 <img src="/static/search/image/down-@1x.png" alt=""></a>-->
-            <!--            <div>-->
-            <!--                <a href="#">手机</a>-->
-            <!--                <a href="#">老人机</a>-->
-            <!--                <a href="#">对讲机</a>-->
-            <!--                <a href="#">女性手机</a>-->
-            <!--                <a href="#">超续航手机</a>-->
-            <!--                <a href="#">全面屏手机</a>-->
-            <!--                <a href="#">拍照手机</a>-->
-            <!--                <a href="#">游戏手机</a>-->
-            <!--            </div>-->
         </div>
 
         <i><img src="/static/search/image/right-@1x.png" alt=""></i>
@@ -797,6 +785,7 @@
             </div>
             <div class="JD_nav_logo">
                 <!--品牌-->
+                <!-- th:if="${#lists.size(result.brands)>1}"-->
                 <div class="JD_nav_wrap">
                     <div class="sl_key">
                         <span>品牌：</span>
@@ -806,7 +795,7 @@
                             <ul>
                                 <li th:each="brand:${result.brands}">
 
-                                    <a th:href="'javascript:searchProducts(\'brand\',' + ${brand.brandId} + ')'"
+                                    <a th:href="'javascript:searchProducts(\'brandId\',' + ${brand.brandId} + ')'"
                                        href="#">
                                         <img th:src="${brand.brandImg}" alt=""
                                              src="/static/search/img/598033b4nd6055897.jpg"
@@ -815,6 +804,7 @@
                                             华为(HUAWEI)
                                         </div>
                                     </a>
+
                                 </li>
                             </ul>
                         </div>
@@ -834,6 +824,7 @@
                 </div>
 
                 <!--分类-->
+                <!--th:if="${#lists.size(result.catalogs)>1}"-->
                 <div class="JD_pre">
                     <div class="sl_key">
                         <span>分类：</span>
@@ -861,6 +852,7 @@
                 </div>
 
                 <!--其他属性 -->
+                <!-- th:if="${#lists.size(attr.attrValue)>1}"-->
                 <div class="JD_pre" th:each="attr:${result.attrs}">
 
                     <div class="sl_key">
@@ -2133,6 +2125,37 @@
         attrFilterMap.set(attrId, values)
 
         location.href = setAttrFilterMap(attrFilterMap);
+    }
+
+
+    // id,key,name,value,isList
+    function removeFilter(key, value, id = null, removeAll = false) {
+        let url = new URL(location.href);
+        let vals = new Set(url.searchParams.getAll(key));
+        url.searchParams.delete(key);
+        if (id) {
+            for (let v of vals) {
+                if (!v.startsWith(`${id}_`)) {
+                    url.searchParams.append(key, v);
+                    continue;
+                }
+                if (!removeAll) {
+                    let valSet = new Set(v.split('_')[1].split(':'));
+                    valSet.delete(value);
+                    if (valSet.size > 0) {
+                        url.searchParams.append(key, `${id}_${[...valSet].join(':')}`);
+                    }
+                }
+            }
+
+        } else if (!removeAll) {
+            vals.delete(value);
+            for (let v of vals) {
+                url.searchParams.append(key, v);
+            }
+        }
+        location.href = url.href;
+        return false;
     }
 
     /**

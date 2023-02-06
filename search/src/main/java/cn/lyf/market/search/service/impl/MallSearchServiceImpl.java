@@ -6,9 +6,7 @@ import cn.lyf.market.search.config.ElasticSearchConfig;
 import cn.lyf.market.search.constant.EsConstant;
 import cn.lyf.market.search.feign.ProductFeignService;
 import cn.lyf.market.search.service.MallSearchService;
-import cn.lyf.market.search.vo.AttrVo;
-import cn.lyf.market.search.vo.SearchParam;
-import cn.lyf.market.search.vo.SearchResult;
+import cn.lyf.market.search.vo.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,30 +62,76 @@ public class MallSearchServiceImpl implements MallSearchService {
 			result = buildSearchResult(response);
 			result.setPageNum(param.getPageNum());
 
+			List<SearchResult.Filter> filters = new ArrayList<>();
 			// TODO 属性应该改为从ElasticSearch获取
+			// 属性过滤参数
 			if (null != param.getAttrs()) {
-				List<SearchResult.Filter> filters = new ArrayList<>();
+
 				param.getAttrs().forEach(attr -> {
 					String[] s = attr.split("_");
 					final Long attrId = Long.parseLong(s[0]);
 					final String[] attrValues = s[1].split(":");
 
 					R r = productFeignService.attrInfo(attrId);
-					AttrVo attrvo = R.convertTo(r.get("attr"), new TypeReference<>() {
-					});
+					String attrName = attrId + "";
+					if (r.getCode() == 0) {
+						AttrVo attrvo = R.convertTo(r.get("attr"), new TypeReference<>() {
+						});
+						attrName = attrvo.getAttrName();
+					}
 
 					for (String value : attrValues) {
 						SearchResult.Filter filter = new SearchResult.Filter();
+
 						filter.setId(attrId);
-						filter.setName(attrvo.getAttrName());
+						filter.setName(attrName);
 						filter.setValue(value);
+						filter.setShowValue(value);
+						filter.setIsList(false);
+						filter.setKey("attrs");
+
 						filters.add(filter);
 					}
 				});
-				result.setFilters(filters);
+
+			}
+			// 品牌过滤参数
+			if (null != param.getBrandId() && param.getBrandId().size() > 0) {
+				SearchResult.Filter filter = new SearchResult.Filter();
+
+				R r = productFeignService.brandInfo(param.getBrandId());
+				if (r.getCode() == 0) {
+					List<BrandVo> brandVos = R.convertTo(r.get("brand"), new TypeReference<>() {
+					});
+					filter.setValue(brandVos.stream().map(BrandVo::getName).collect(Collectors.joining(":")));
+					filter.setShowValue(brandVos.stream().map(BrandVo::getName).collect(Collectors.joining(";")));
+				}
+
+				filter.setName("品牌");
+				filter.setIsList(true);
+				filter.setKey("brandId");
+
+				filters.add(filter);
+			}
+			// TODO 分类过滤 catalog3Id
+			if (null != param.getCatalog3Id()) {
+				SearchResult.Filter filter = new SearchResult.Filter();
+				R r = productFeignService.catalogInfo(param.getCatalog3Id());
+				if (r.getCode() == 0) {
+					CatalogVo catalogVo = R.convertTo(r.get("data"), new TypeReference<>() {
+					});
+					filter.setValue(catalogVo.getCatId() + "");
+					filter.setShowValue(catalogVo.getName());
+				}
+
+				filter.setName("分类");
+				filter.setIsList(false);
+				filter.setKey("catalog3Id");
+
+				filters.add(filter);
 			}
 
-
+			result.setFilters(filters);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,6 +139,8 @@ public class MallSearchServiceImpl implements MallSearchService {
 	}
 
 	/**
+	 * 构建返回数据
+	 *
 	 * @param response
 	 * @return
 	 */
@@ -212,6 +258,12 @@ public class MallSearchServiceImpl implements MallSearchService {
 		return result;
 	}
 
+	/**
+	 * 构建es查询
+	 *
+	 * @param param
+	 * @return
+	 */
 	private SearchRequest buildSearchRequest(SearchParam param) {
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		//region 查询 query

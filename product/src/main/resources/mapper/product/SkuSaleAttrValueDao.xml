@@ -12,15 +12,25 @@
         <result property="attrValue" column="attr_value"/>
         <result property="attrSort" column="attr_sort"/>
     </resultMap>
-    <select id="getSaleAttrsBySpuId" resultType="cn.lyf.market.product.vo.ItemSaleAttrVo">
-        SELECT psi.sku_id                              AS sku_id,
-               pssav.attr_id                           AS attr_id,
-               pssav.attr_name                         AS attr_name,
-               GROUP_CONCAT(DISTINCT pssav.attr_value) AS attr_values
+
+    <resultMap type="cn.lyf.market.product.vo.ItemSaleAttrVo" id="ItemSaleAttrVo">
+        <result property="attrId" column="attr_id"/>
+        <result property="attrName" column="attr_name"/>
+        <collection property="attrValues" ofType="cn.lyf.market.product.vo.ItemSaleAttrVo$AttrValue">
+            <result property="attrValue" column="attr_value"></result>
+            <result property="skuIds" column="sku_ids"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getSaleAttrsBySpuId" resultMap="ItemSaleAttrVo">
+        SELECT pssav.attr_id                     attr_id,
+               pssav.attr_name                   attr_name,
+               pssav.attr_value                  attr_value,
+               GROUP_CONCAT(DISTINCT psi.sku_id) sku_ids
         FROM pms_sku_info psi
                  LEFT JOIN pms_sku_sale_attr_value pssav ON pssav.sku_id = psi.sku_id
-        WHERE psi.spu_id = 13
-        GROUP BY pssav.attr_id
+        WHERE psi.spu_id = #{spuId}
+        GROUP BY pssav.attr_id, pssav.attr_name, pssav.attr_value
     </select>
 
 

@@ -768,7 +768,7 @@ a {
         margin-left: 5px; }
         .box .box-two .box-attr dd img {
           vertical-align: -12px; }
-        .box .box-two .box-attr dd:nth-child(3) {
+        .box .box-two .box-attr .checked {
           border: solid 1px red; }
     .box .box-two .box-attr-2 {
       margin-bottom: 5px; }

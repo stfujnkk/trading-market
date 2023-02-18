@@ -1,7 +1,6 @@
 package cn.lyf.market.product.feign;
 
 import cn.lyf.common.utils.R;
-import cn.lyf.market.product.vo.SkuHasStockVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

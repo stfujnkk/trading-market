@@ -1,5 +1,6 @@
 package cn.lyf.market.product.service;
 
+import cn.lyf.market.product.vo.SkuInfoItemVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import cn.lyf.common.utils.PageUtils;
 import cn.lyf.market.product.entity.SkuInfoEntity;
@@ -23,5 +24,7 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
     PageUtils queryPageByCondition(Map<String, Object> params);
 
     List<SkuInfoEntity> getSkusBySpuId(Long spuId);
+
+	SkuInfoItemVo item(Long skuId);
 }
 

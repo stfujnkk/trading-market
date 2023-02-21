@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -37,6 +40,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
 	@Autowired
 	SkuSaleAttrValueService skuSaleAttrValueService;
+
+	@Autowired
+	ThreadPoolExecutor executor;
 
 	@Override
 	public PageUtils queryPage(Map<String, Object> params) {
@@ -93,25 +99,42 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 	}
 
 	@Override
-	public SkuInfoItemVo item(Long skuId) {
+	public SkuInfoItemVo item(Long skuId) throws ExecutionException, InterruptedException {
 		SkuInfoItemVo itemVo = new SkuInfoItemVo();
-		// sku基本信息 标题, pms_sku_info
-		SkuInfoEntity info = getById(skuId);
-		itemVo.setInfo(info);
-		Long spuId = info.getSpuId();
-		Long catalogId = info.getCatalogId();
-		// sku 图片 pms_sku_images
-		List<SkuImagesEntity> images = skuImagesService.getImagesBySkuId(skuId);
-		itemVo.setImages(images);
-		// 获取spu销售属性组合
-		List<ItemSaleAttrVo> saleAttrVo = skuSaleAttrValueService.getSaleAttrsBySpuId(spuId);
-		itemVo.setSaleAttr(saleAttrVo);
-		// spu商品介绍
-		SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(spuId);
-		itemVo.setDescp(spuInfoDescEntity);
-		// spu规格参数信息
-		List<SpuAttrGroupVo> attrGroupVos = attrGroupService.getAttrGroupWithAttrsBySpuId(spuId, catalogId);
-		itemVo.setGroupAttrs(attrGroupVos);
+		// 异步任务编排
+		CompletableFuture<Void> imgFuture = CompletableFuture.runAsync(() -> {
+			// sku 图片 pms_sku_images
+			List<SkuImagesEntity> images = skuImagesService.getImagesBySkuId(skuId);
+			itemVo.setImages(images);
+		}, executor);
+
+		CompletableFuture<SkuInfoEntity> infoFuture = CompletableFuture.supplyAsync(() -> {
+			// sku基本信息 标题, pms_sku_info
+			SkuInfoEntity info = getById(skuId);
+			itemVo.setInfo(info);
+			return info;
+		}, executor);
+
+		CompletableFuture<Void> saleAttrFuture = infoFuture.thenAcceptAsync((info) -> {
+			// 获取spu销售属性组合
+			List<ItemSaleAttrVo> saleAttrVo = skuSaleAttrValueService.getSaleAttrsBySpuId(info.getSpuId());
+			itemVo.setSaleAttr(saleAttrVo);
+		}, executor);
+
+		CompletableFuture<Void> descFuture = infoFuture.thenAcceptAsync((info) -> {
+			// spu商品介绍
+			SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(info.getSpuId());
+			itemVo.setDescp(spuInfoDescEntity);
+		}, executor);
+
+		CompletableFuture<Void> attrGroupFuture = infoFuture.thenAcceptAsync((info) -> {
+			// spu规格参数信息
+			List<SpuAttrGroupVo> attrGroupVos = attrGroupService.getAttrGroupWithAttrsBySpuId(info.getSpuId(), info.getCatalogId());
+			itemVo.setGroupAttrs(attrGroupVos);
+		}, executor);
+
+		CompletableFuture.allOf(imgFuture, saleAttrFuture, descFuture, attrGroupFuture, imgFuture).get();
+
 		return itemVo;
 	}
 

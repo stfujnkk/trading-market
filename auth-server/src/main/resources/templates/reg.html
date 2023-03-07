@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:o="http://www.exmaple.com">
 
 <head>
     <meta charset="utf-8"/>
-    <title>gulimall注册页面</title>
+    <title>JMall注册页面</title>
     <script src="/static/reg/libs/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="/static/reg/js/jQuery/jquery-3.1.1.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/reg/bootStrap/bootstrap/css/bootstrap.css"/>
@@ -26,11 +26,11 @@
             position: absolute;
             top: 30px;
             left: 10px;
-			height: 75%;
+            height: 75%;
         }
 
         .dibu {
-			top: auto;
+            top: auto;
             bottom: 0;
         }
     </style>
@@ -38,11 +38,11 @@
 
 <body>
 
-<div class="laoda" style="width: 100vw;height: 100vh;">
+<div class="laoda" style="width: 100vw;height: 100vh;" th:if="${errors==null}">
     <div class="zong">
         <div class="tou">
             <p><b>JMall商城用户注册协议和隐私政策</b></p>
-            <a href="/static/reg/https://www.jd.com/" class="cuo"><span class="glyphicon glyphicon-remove"></span></a>
+            <a href="http://jmall.com/" class="cuo"><span class="glyphicon glyphicon-remove"></span></a>
         </div>
         <div class="zt">
 
@@ -647,35 +647,35 @@ minor-latin;mso-fareast-font-family:宋体;">、其他以粗体下划线标识�
                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%"><o:p></o:p></span>
                     </p>
 
-                    <p class="MsoNormal" style="line-height:150%"><b><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">【请您注意】<u>如果您不同意上述协议或其中任何条款约定，请<span
+                    <p class="MsoNormal" style="line-height:150%"><b><span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';color:black">【请您注意】<u>如果您不同意上述协议或其中任何条款约定，请<span
                             class="GramE">您停止</span>注册。<span class="GramE">您停止</span>注册后将仅可以浏览我们的商品信息但无法享受我们的产品或服务。如您按照注册流程提示填写信息、阅读并点击同意上述协议且完成全部注册流程后，即表示您已充分阅读、理解并接受协议的全部内容；并表明您也同意JMall商城可以依据以上的隐私政策内容来处理您的个人信息。</u></span></b><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 color:black">如您对以上协议内容有任何疑问，您可随时通过隐私政策下方的联系方式联系我们。</span><span lang="EN-US"
                                                                style="mso-bidi-font-size:10.5pt;line-height:150%"><o:p></o:p></span>
                     </p>
 
                     <p class="MsoNormal" style="line-height:150%"><b><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">点击同意即表示您已阅读并同意</span></b><b><u><span
-                            lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';color:black">点击同意即表示您已阅读并同意</span></b><b><u><span
+                            lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 color:red"><a href="/static/reg/https://in.m.jd.com/help/app/register_info.html" target="_blank"><span lang="EN-US"
                                                                                                        style="color:red"><span
-                            lang="EN-US">《JMall商城用户注册协议》</span></span></a></span></u></b><b><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            lang="EN-US">《JMall商城用户注册协议》</span></span></a></span></u></b><b><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 color:black">与</span></b><b><u><span lang="EN-US" style="mso-bidi-font-size:10.5pt;
-line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:red"><a
+line-height:150%;font-family:'微软雅黑','sans-serif';color:red"><a
                             href="/static/reg/https://in.m.jd.com/help/app/private_policy.html" target="_blank"><span
                             lang="EN-US" style="color:red"><span lang="EN-US">《JMall商城隐私政策》</span></span></a></span></u></b><b><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
-color:black">，并同意我们将您的订单信息共享给为完成此订单所必须的第三方合作方（详情查看【</span></b><b><u><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
+color:black">，并同意我们将您的订单信息共享给为完成此订单所必须的第三方合作方（详情查看【</span></b><b><u><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 color:red"><a href="/static/reg/https://in.m.jd.com/help/app/order_sharing_info.html" target="_blank"><span lang="EN-US"
                                                                                                             style="color:red"><span
-                            lang="EN-US">订单共享与安全</span></span></a></span></u></b><b><u><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            lang="EN-US">订单共享与安全</span></span></a></span></u></b><b><u><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 color:black">】</span></u></b><b><span style="mso-bidi-font-size:10.5pt;
-line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;color:black">。</span></b><span lang="EN-US"
-                                                                                                    style="mso-bidi-font-size:10.5pt;line-height:150%"><o:p></o:p></span>
+line-height:150%;font-family:'微软雅黑','sans-serif';color:black">。</span></b><span lang="EN-US"
+                                                                                style="mso-bidi-font-size:10.5pt;line-height:150%"><o:p></o:p></span>
                     </p>
 
-                    <p class="MsoNormal" style="line-height:150%"><b><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                    <p class="MsoNormal" style="line-height:150%"><b><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 color:black">&nbsp;</span></b><span style="mso-bidi-font-size:10.5pt;
 line-height:150%;font-family:宋体;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
 minor-latin;mso-fareast-font-family:宋体;">如您对协议有任何疑问，可向我们的客服咨询。</span><span lang="EN-US"
@@ -723,7 +723,7 @@ minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">�
                             style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:宋体;mso-ascii-font-family:
 Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
 minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">，网址：</span><span lang="EN-US"
-                                                                                               style="mso-bidi-font-size:10.5pt;line-height:150%">www.gulimall.com</span><span
+                                                                                               style="mso-bidi-font-size:10.5pt;line-height:150%">www.JMall.com</span><span
                             style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:宋体;mso-ascii-font-family:
 Calibri;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:宋体;mso-fareast-theme-font:
 minor-fareast;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">）所有者（以下简称为</span><span lang="EN-US"
@@ -1557,7 +1557,7 @@ none">
                         <a name="OLE_LINK18"></a>
                         <a name="OLE_LINK17"><span style="mso-bookmark:
 OLE_LINK18"><b style="mso-bidi-font-weight:normal"><span style="font-size:14.0pt;
-line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">《JMall商城隐私政策》正文<span lang="EN-US"><o:p></o:p></span></span>
+line-height:150%;font-family:'微软雅黑','sans-serif'">《JMall商城隐私政策》正文<span lang="EN-US"><o:p></o:p></span></span>
 								</b>
 								</span>
                         </a>
@@ -1759,8 +1759,9 @@ bold">并<span class="GramE">确认您</span>已经充分理解本政策所写�
 line-height:150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:10.5pt;line-height:150%;mso-ascii-font-family:宋体;
 mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:宋体;mso-fareast-theme-font:
-minor-fareast;mso-hansi-font-family:宋体;mso-hansi-theme-font:minor-fareast">如对本隐私政策或相关事宜有任何问题，您可随时通过访问<span lang="EN-US">https://help.gulimall.com</span>在线客服系统、发送邮件至<span
-                            lang="EN-US">privacy@gulimall.com</span>或拨打我们的任何一部客<span class="GramE">服电话</span>等多种方式与我们联系 。<span
+minor-fareast;mso-hansi-font-family:宋体;mso-hansi-theme-font:minor-fareast">如对本隐私政策或相关事宜有任何问题，您可随时通过访问<span lang="EN-US">https://help.JMall.com</span>在线客服系统、发送邮件至<span
+                            lang="EN-US">privacy@JMall.com</span>或拨打我们的任何一部客<span
+                            class="GramE">服电话</span>等多种方式与我们联系 。<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -1770,7 +1771,7 @@ minor-fareast;mso-hansi-font-family:宋体;mso-hansi-theme-font:minor-fareast">�
 0;line-height:150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b
                             style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">一、我们如何收集和使用您的个人信息<span lang="EN-US"><o:p></o:p></span></span>
+150%;font-family:'微软雅黑','sans-serif'">一、我们如何收集和使用您的个人信息<span lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
 							</span>
@@ -1903,11 +1904,11 @@ mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-fo
 
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
-OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 mso-bidi-font-weight:bold">1</span></span>
 							</span><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">、实现网上购物所必须的功能<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2145,11 +2146,11 @@ mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-fo
 
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
-OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 mso-bidi-font-weight:bold">2</span></span>
 							</span><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">、改进我们的产品与<span lang="EN-US">/</span>或服务所必须的功能<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2175,12 +2176,12 @@ mso-bidi-font-weight:bold">我们还可能为了提供服务及改进服务质�
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><a name="OLE_LINK8"></a><a name="OLE_LINK7"><span
-                            style="mso-bookmark:OLE_LINK8"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            style="mso-bookmark:OLE_LINK8"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 mso-bidi-font-weight:bold">3</span></span>
 							</a>
 							</span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bookmark:OLE_LINK7"><span style="mso-bookmark:OLE_LINK8"><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            style="mso-bookmark:OLE_LINK7"><span style="mso-bookmark:OLE_LINK8"><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 mso-bidi-font-weight:bold">、保障交易安全所必须的功能<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2205,7 +2206,7 @@ mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-fo
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">（二）您可选择是否授权我们收集和使用您的个人信息的情形<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2396,7 +2397,7 @@ minor-fareast;mso-hansi-font-family:宋体;mso-hansi-theme-font:minor-fareast"><
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">（三）您充分知晓，以下情形中，我们收集、使用个人信息无需征得您的授权同意：<b><u><span lang="EN-US"><o:p></o:p></span></u>
 							</b>
 							</span>
@@ -2600,7 +2601,7 @@ minor-fareast;mso-hansi-font-family:宋体;mso-hansi-theme-font:minor-fareast">�
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">（四）我们从第三方获得您个人信息的情形<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2618,7 +2619,7 @@ minor-fareast">我们可能从第三方获取您授权共享的账户信息（�
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">（五）您个人信息使用的规则<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2740,7 +2741,7 @@ minor-fareast;mso-hansi-font-family:宋体;mso-hansi-theme-font:minor-fareast"><
 0;line-height:150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b
                             style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">二、我们如何使用<span lang="EN-US"> Cookie </span>和同类技术<span
+150%;font-family:'微软雅黑','sans-serif'">二、我们如何使用<span lang="EN-US"> Cookie </span>和同类技术<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
@@ -2750,7 +2751,7 @@ none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">（一）<span lang="EN-US">Cookies</span>的使用<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2793,7 +2794,7 @@ mso-hansi-theme-font:minor-fareast">、我们不会将<span lang="EN-US"> Cookie
 
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
-OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';
 mso-bidi-font-weight:bold"><o:p>&nbsp;</o:p></span></span>
 							</span>
                     </p>
@@ -2801,7 +2802,7 @@ mso-bidi-font-weight:bold"><o:p>&nbsp;</o:p></span></span>
                     <p class="a" align="left" style="text-align:left;line-height:150%;tab-stops:21.0pt;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:
-10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-weight:
+10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif';mso-bidi-font-weight:
 bold">（二）网络<span lang="EN-US">Beacon</span>和同类技术的使用<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -2846,7 +2847,7 @@ minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></span
 0;line-height:150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b
                             style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">三、我们如何共享、转让、公开披露您的个人信息<span lang="EN-US"><o:p></o:p></span></span>
+150%;font-family:'微软雅黑','sans-serif'">三、我们如何共享、转让、公开披露您的个人信息<span lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
 							</span>
@@ -2855,7 +2856,7 @@ none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">（一）共享<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">（一）共享<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3078,7 +3079,7 @@ minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></span
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">（二）转让<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">（二）转让<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3164,7 +3165,7 @@ minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></span
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">（三）公开披露<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">（三）公开披露<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3217,20 +3218,20 @@ minor-fareast;mso-hansi-theme-font:minor-fareast"><o:p>&nbsp;</o:p></span></span
                     <p class="MsoNormal" align="left" style="text-align:left;line-height:150%;
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b style="mso-bidi-font-weight:
-normal"><span style="font-size:12.0pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">四、我们如何保护和<span
+normal"><span style="font-size:12.0pt;line-height:150%;font-family:'微软雅黑','sans-serif'">四、我们如何保护和<span
                             class="GramE">保存您</span>的个人信息</span>
 							</b>
 							</span>
 							</span><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><o:p></o:p></span></span>
+                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'"><o:p></o:p></span></span>
 							</span>
                     </p>
 
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">（一）我们保护您个人信息的技术与措施<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">（一）我们保护您个人信息的技术与措施<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3543,7 +3544,7 @@ minor-fareast"><span style="mso-spacerun:yes">&nbsp;&nbsp; </span></span>
 							</b>
 							</span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">（二）您个人信息的保存</span></span>
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">（二）您个人信息的保存</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b
                             style="mso-bidi-font-weight:normal"><span lang="EN-US" style="mso-bidi-font-size:
 10.5pt;line-height:150%;font-family:宋体;mso-ascii-theme-font:minor-fareast;
@@ -3625,7 +3626,7 @@ mso-hansi-theme-font:minor-fareast">、如果我们终止服务或运营，我�
 layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:
 OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b style="mso-bidi-font-weight:
 normal"><span lang="EN-US" style="mso-bidi-font-size:10.5pt;line-height:150%;
-font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><o:p>&nbsp;</o:p></span></b>
+font-family:'微软雅黑','sans-serif'"><o:p>&nbsp;</o:p></span></b>
 							</span>
 							</span>
                     </p>
@@ -3634,7 +3635,7 @@ font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;"><o:p>&nbsp;</o:p></
 0;line-height:150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><b
                             style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">五、您如何<span class="GramE">管理您</span>的个人信息<span lang="EN-US"><o:p></o:p></span></span>
+150%;font-family:'微软雅黑','sans-serif'">五、您如何<span class="GramE">管理您</span>的个人信息<span lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
 							</span>
@@ -3653,9 +3654,9 @@ mso-hansi-theme-font:minor-fareast;mso-bidi-font-weight:bold">京<span class="Gr
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">1</span></span>
+                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">1</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">、访问和<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">、访问和<span
                             class="GramE">更正您</span>的个人信息<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3778,9 +3779,9 @@ mso-hansi-theme-font:minor-fareast;mso-bidi-font-weight:bold">（<span lang="EN-
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">2</span></span>
+                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">2</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">、<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">、<span
                             class="GramE">删除您</span>的个人信息<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3877,9 +3878,9 @@ mso-hansi-theme-font:minor-fareast;mso-bidi-font-weight:bold">若我们决定<sp
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">3</span></span>
+                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">3</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">、改变您授权同意的范围或撤回您的授权<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">、改变您授权同意的范围或撤回您的授权<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3913,9 +3914,9 @@ mso-hansi-theme-font:minor-fareast">请您理解，每个业务功能需要一�
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">4</span></span>
+                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">4</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">、注销账户<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">、注销账户<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -3941,9 +3942,9 @@ mso-hansi-theme-font:minor-fareast">您可以在我们的产品中直接申请�
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">5</span></span>
+                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">5</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">、如果您不想接受我们给您发送的促销信息，您随时可通过以下方式取消：<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">、如果您不想接受我们给您发送的促销信息，您随时可通过以下方式取消：<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -4015,9 +4016,9 @@ mso-hansi-theme-font:minor-fareast;mso-bidi-font-weight:bold">（<span lang="EN-
                     <p class="MsoNormal" align="left" style="text-align:left;text-indent:21.0pt;
 mso-char-indent-count:2.0;line-height:150%;layout-grid-mode:char;mso-layout-grid-align:
 none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span lang="EN-US"
-                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">6</span></span>
+                                                                                        style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">6</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">、<span
+                            style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:'微软雅黑','sans-serif'">、<span
                             class="GramE">响应您</span>的请求<span lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -4029,7 +4030,7 @@ none"><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18
 minor-fareast;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;
 mso-hansi-theme-font:minor-fareast;mso-bidi-font-weight:bold">如果您无法通过上述方式访问、更正或<span class="GramE">删除您</span>的个人信息，或您需要访问、更正或<span
                             class="GramE">删除您</span>在使用我们产品与<span lang="EN-US">/</span>或服务时所产生的其他个人信息，或您认为JMall商城存在任何违反法律法规或与您关于个人信息的收集或使用的约定，<span
-                            class="GramE">您均可以</span>发送电子邮件至<span lang="EN-US">privacy@gulimall.com</span>或通过本协议下方的其他方式与我们联系。为了保障安全，我们可能需要您提供书面请求，或以其他方式证明您的身份，我们将在收到您反馈并<span
+                            class="GramE">您均可以</span>发送电子邮件至<span lang="EN-US">privacy@JMall.com</span>或通过本协议下方的其他方式与我们联系。为了保障安全，我们可能需要您提供书面请求，或以其他方式证明您的身份，我们将在收到您反馈并<span
                             class="GramE">验证您</span>的身份后的<span lang="EN-US">30</span>天内答复您的请求。对于<span
                             class="GramE">您合理</span>的请求，我们原则上不收取费用，但对多次重复、超出合理限度的请求，我们将视情收取一定成本费用。对于那些无端重复、需要过多技术手段（例如，需要开发新系统或从根本上改变现行惯例）、给他人合法权益带来风险或者非常不切实际（例如，涉及备份磁带上存放的信息）的请求，我们可能会予以拒绝。<span
                             lang="EN-US"><o:p></o:p></span></span>
@@ -4111,7 +4112,7 @@ minor-fareast"><o:p>&nbsp;</o:p></span></b>
                     <p class="a" align="left" style="text-align:left;text-indent:24.0pt;line-height:
 150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:OLE_LINK17"><span
                             style="mso-bookmark:OLE_LINK18"><b style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">六、未成年人的个人信息保护<span lang="EN-US"><o:p></o:p></span></span>
+150%;font-family:'微软雅黑','sans-serif'">六、未成年人的个人信息保护<span lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
 							</span>
@@ -4173,7 +4174,7 @@ mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-fo
                     <p class="a" align="left" style="text-align:left;text-indent:24.0pt;line-height:
 150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:OLE_LINK17"><span
                             style="mso-bookmark:OLE_LINK18"><b style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">七、通知和修订<span lang="EN-US"><o:p></o:p></span></span>
+150%;font-family:'微软雅黑','sans-serif'">七、通知和修订<span lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
 							</span>
@@ -4302,7 +4303,7 @@ minor-fareast"><o:p>&nbsp;</o:p></span></b>
                     <p class="a" align="left" style="text-align:left;text-indent:24.0pt;line-height:
 150%;tab-stops:21.0pt;layout-grid-mode:char;mso-layout-grid-align:none"><span style="mso-bookmark:OLE_LINK17"><span
                             style="mso-bookmark:OLE_LINK18"><b style="mso-bidi-font-weight:normal"><span style="font-size:12.0pt;line-height:
-150%;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;">八、如何联系我们<span lang="EN-US"><o:p></o:p></span></span>
+150%;font-family:'微软雅黑','sans-serif'">八、如何联系我们<span lang="EN-US"><o:p></o:p></span></span>
 							</b>
 							</span>
 							</span>
@@ -4322,11 +4323,11 @@ mso-hansi-theme-font:minor-fareast">、如您对本隐私政策或您个人信�
                                 style="mso-bookmark:OLE_LINK4"><span style="mso-bookmark:OLE_LINK3"><span lang="EN-US"
                                                                                                           style="mso-bidi-font-size:10.5pt;
 line-height:150%;font-family:宋体;mso-ascii-theme-font:minor-fareast;mso-fareast-font-family:
-宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast">https://help.gulimall.com</span></span>
+宋体;mso-fareast-theme-font:minor-fareast;mso-hansi-theme-font:minor-fareast">https://help.JMall.com</span></span>
 								</span>
                         </a><span style="mso-bookmark:OLE_LINK4"><span style="mso-bookmark:OLE_LINK3"><span style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:宋体;mso-ascii-theme-font:
 minor-fareast;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;
-mso-hansi-theme-font:minor-fareast">在线客服系统、发送邮件至<span lang="EN-US">privacy@gulimall.com</span>或拨打我们的任何一部客<span
+mso-hansi-theme-font:minor-fareast">在线客服系统、发送邮件至<span lang="EN-US">privacy@JMall.com</span>或拨打我们的任何一部客<span
                                 class="GramE">服电话</span>等多种方式与我们联系</span>
 							</span>
 							</span><span style="mso-bidi-font-size:
@@ -4343,7 +4344,7 @@ minor-fareast;mso-hansi-theme-font:minor-fareast">2</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
                             style="mso-bidi-font-size:10.5pt;line-height:150%;font-family:宋体;mso-ascii-theme-font:
 minor-fareast;mso-fareast-font-family:宋体;mso-fareast-theme-font:minor-fareast;
-mso-hansi-theme-font:minor-fareast">、我们设立了个人信息保护专职部门（或个人信息保护专员），您可以通过发送邮件至<span lang="EN-US">privacy@gulimall.com</span>的方式与其联系。<span
+mso-hansi-theme-font:minor-fareast">、我们设立了个人信息保护专职部门（或个人信息保护专员），您可以通过发送邮件至<span lang="EN-US">privacy@JMall.com</span>的方式与其联系。<span
                             lang="EN-US"><o:p></o:p></span></span>
 							</span>
 							</span>
@@ -4523,7 +4524,7 @@ mso-bidi-font-family:宋体;mso-font-kerning:0pt">如您对本《注销须知》
                         <a href="/static/reg/https://help.jd.com"><span style="mso-bookmark:OLE_LINK17"><span
                                 style="mso-bookmark:OLE_LINK18"><span lang="EN-US" style="mso-bidi-font-size:
 10.5pt;mso-ascii-font-family:Calibri;mso-fareast-font-family:宋体;mso-hansi-font-family:
-Calibri;mso-bidi-font-family:宋体;mso-font-kerning:0pt">https://help.gulimall.com</span></span>
+Calibri;mso-bidi-font-family:宋体;mso-font-kerning:0pt">https://help.JMall.com</span></span>
 								</span>
                         </a><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:10.5pt;font-family:宋体;mso-ascii-font-family:Calibri;
 mso-hansi-font-family:Calibri;mso-bidi-font-family:宋体;mso-font-kerning:0pt">自助查询。</span></span>
@@ -5798,7 +5799,7 @@ mso-border-bottom-alt:solid #EBEBEB .75pt;padding:0cm 0cm 11.0pt 0cm">
 mso-outline-level:2;border:none;mso-border-bottom-alt:solid #EBEBEB .75pt;
 padding:0cm;mso-padding-alt:0cm 0cm 11.0pt 0cm"><span style="mso-bookmark:OLE_LINK17"><span
                                 style="mso-bookmark:OLE_LINK18"><b><span style="font-size:15.0pt;font-family:
-&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:宋体;mso-font-kerning:18.0pt">隐私政策<span lang="EN-US"><o:p></o:p></span></span>
+'微软雅黑','sans-serif';mso-bidi-font-family:宋体;mso-font-kerning:18.0pt">隐私政策<span lang="EN-US"><o:p></o:p></span></span>
 								</b>
 								</span>
 								</span>
@@ -5808,7 +5809,7 @@ padding:0cm;mso-padding-alt:0cm 0cm 11.0pt 0cm"><span style="mso-bookmark:OLE_LI
 
                     <p class="MsoNormal" align="left" style="mso-margin-top-alt:auto;margin-bottom:
 12.0pt;text-align:left;line-height:24.0pt;mso-pagination:widow-orphan"><span style="mso-bookmark:OLE_LINK17"><span
-                            style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:10.5pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:
+                            style="mso-bookmark:OLE_LINK18"><span style="mso-bidi-font-size:10.5pt;font-family:'微软雅黑','sans-serif';mso-bidi-font-family:
 宋体;mso-font-kerning:0pt">JMall商城（以下或称“我们”）注重保护用户个人信息及个人隐私。本隐私政策解释了用户（“您”）个人信息收集（以下或称“信息”）和使用的有关情况，本隐私政策适用于JMall商城向您提供的所有相关服务（包括但不限于电子商务、网络资讯、网络社交、互联网金融服务等，以下称“JMall商城服务”或“服务”）。<b>如果您不同意本隐私政策的任何内容，您应立即停止使用JMall商城服务。当您使用JMall商城提供的任一服务时，即表示您已同意我们按照本隐私政策来合法使用和保护您的个人信息。<span
                             lang="EN-US"><br>
 <br>
@@ -5886,33 +5887,33 @@ padding:0cm;mso-padding-alt:0cm 0cm 11.0pt 0cm"><span style="mso-bookmark:OLE_LI
 
                     <p class="MsoNormal" align="left" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
 auto;text-align:left;line-height:24.0pt;mso-pagination:widow-orphan"><span style="mso-bookmark:OLE_LINK17"><span
-                            style="mso-bookmark:OLE_LINK18"><b><span style="mso-bidi-font-size:10.5pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:
+                            style="mso-bookmark:OLE_LINK18"><b><span style="mso-bidi-font-size:10.5pt;font-family:'微软雅黑','sans-serif';mso-bidi-font-family:
 宋体;mso-font-kerning:0pt">您可以在“我的JMall商城”页面的“账户设置”菜单中<span class="GramE">查阅您</span>提交给JMall商城的所有个人信息，你也可通过上述途径更新除实名认证信息之外的其他个人信息（您的实名认证信息是您通过实名认证时使用的姓名和身份证信息），如您需要<span
                             class="GramE">变更您</span>的实名认证信息，您可拨打<span lang="EN-US">95118</span>服务热线申请变更。</span>
 							</b>
 							</span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
-                            lang="EN-US" style="mso-bidi-font-size:10.5pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;
+                            lang="EN-US" style="mso-bidi-font-size:10.5pt;font-family:'微软雅黑','sans-serif';
 mso-bidi-font-family:宋体;mso-font-kerning:0pt"><o:p></o:p></span></span>
 							</span>
                     </p>
 
                     <p class="MsoNormal" align="left" style="mso-margin-top-alt:auto;mso-margin-bottom-alt:
 auto;text-align:left;line-height:24.0pt;mso-pagination:widow-orphan"><span style="mso-bookmark:OLE_LINK17"><span
-                            style="mso-bookmark:OLE_LINK18"><b><span style="mso-bidi-font-size:10.5pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:
+                            style="mso-bookmark:OLE_LINK18"><b><span style="mso-bidi-font-size:10.5pt;font-family:'微软雅黑','sans-serif';mso-bidi-font-family:
 宋体;mso-font-kerning:0pt">六、<span lang="EN-US">Cookie </span>及网络<span lang="EN-US">
 Beacon</span>的使用</span>
 							</b>
 							</span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
                             lang="EN-US" style="mso-bidi-font-size:
-10.5pt;font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:宋体;mso-font-kerning:
+10.5pt;font-family:'微软雅黑','sans-serif';mso-bidi-font-family:宋体;mso-font-kerning:
 0pt"><br>
 <br>
 1</span></span>
 							</span><span style="mso-bookmark:OLE_LINK17"><span style="mso-bookmark:OLE_LINK18"><span
                             style="mso-bidi-font-size:10.5pt;
-font-family:&quot;微软雅黑&quot;,&quot;sans-serif&quot;;mso-bidi-font-family:宋体;mso-font-kerning:0pt">、<span lang="EN-US">Cookie</span>的使用<span
+font-family:'微软雅黑','sans-serif';mso-bidi-font-family:宋体;mso-font-kerning:0pt">、<span lang="EN-US">Cookie</span>的使用<span
                             lang="EN-US"><br>
 Cookie</span>是由网页服务器存放在您的访问设备上的文本文件。指定给您的<span lang="EN-US">Cookie </span>是唯一的，它只能被将<span lang="EN-US">Cookie</span>发布给您的域中的<span
                             lang="EN-US">Web</span>服务器读取。<span lang="EN-US"><br>
@@ -5954,7 +5955,7 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
 
         </div>
         <div class="dibu">
-            <a href="/static/reg/https://www.jd.com/">
+            <a href="http://jmall.com/">
                 <button class="quxiao">取消</button>
             </a>
             <button class="ty">同意并继续</button>
@@ -5969,52 +5970,48 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
     <div class="desc">欢迎注册</div>
     <div class="dfg">
         <span>已有账号？</span>
-        <a href="/static/reg/http://auth.jmall.com/login.html">请登录</a>
+        <a href="http://auth.jmall.com/login.html">请登录</a>
     </div>
 </header>
 <section>
-    <form action="" class="one">
+    <form action="/register" method="post" class="one">
         <div class="register-box">
-            <label for="username" class="username_label">用 户 名
-                <input maxlength="20" type="text" placeholder="您的用户名和登录名">
+            <div class="tips" th:text="${errors!=null && #maps.containsKey(errors,'msg') ?errors.msg:''}"
+                 style="color: red"/>
+            <label class="username_label">用 户 名
+                <input name="userName" maxlength="20" type="text" placeholder="您的用户名和登录名">
+            </label>
+            <div class="tips" th:text="${errors!=null && #maps.containsKey(errors,'userName') ?errors.userName:''}"/>
+        </div>
+        <div class="register-box">
+            <label class="other_label">设 置 密 码
+                <input name="passWord" maxlength="20" type="password" placeholder="建议至少使用两种字符组合">
+            </label>
+            <div class="tips" th:text="${errors!=null && #maps.containsKey(errors,'passWord') ?errors.passWord:''}"/>
+        </div>
+        <div class="register-box">
+            <label class="other_label">确 认 密 码
+                <input name="" maxlength="20" type="password" placeholder="请再次输入密码">
             </label>
             <div class="tips">
 
             </div>
         </div>
         <div class="register-box">
-            <label for="username" class="other_label">设 置 密 码
-                <input maxlength="20" type="password" placeholder="建议至少使用两种字符组合">
-            </label>
-            <div class="tips">
-
-            </div>
-        </div>
-        <div class="register-box">
-            <label for="username" class="other_label">确 认 密 码
-                <input maxlength="20" type="password" placeholder="请再次输入密码">
-            </label>
-            <div class="tips">
-
-            </div>
-        </div>
-        <div class="register-box">
-            <label for="username" class="other_label">
+            <label class="other_label">
                 <span>中国 0086∨</span>
-                <input class="phone" maxlength="20" type="text" placeholder="建议使用常用手机">
+                <input name="phone" class="phone" maxlength="20" type="text" placeholder="建议使用常用手机">
             </label>
-            <div class="tips">
-
-            </div>
+            <div class="tips" th:text="${errors!=null && #maps.containsKey(errors,'phone')?errors.phone:''}"/>
         </div>
         <div class="register-box">
-            <label for="username" class="other_label">验 证 码
-                <input maxlength="20" type="text" placeholder="请输入验证码" class="caa">
+            <label class="other_label">验 证 码
+                <input name="code" maxlength="20" type="text" placeholder="请输入验证码" class="caa">
             </label>
-            <span id="code"></span>
-            <div class="tips">
-
-            </div>
+            <a id="sendCode">发送验证码</a>
+            <!-- <span id="code"></span> -->
+            <div class="tips" th:text="${errors!=null && #maps.containsKey(errors,'code')?errors.code:''}"/>
+        </div>
         </div>
         <div class="arguement">
             <input type="checkbox" id="xieyi"> 阅读并同意
@@ -6092,7 +6089,7 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
         </li>
     </ul>
 </div>
-<p class="bq">Copyright©2004-2016 JMall商城gulimall.com 版权所有</p>
+<p class="bq">Copyright©2004-2016 JMall商城JMall.com 版权所有</p>
 <br/><br/>
 <script type="text/javascript" charset="utf-8">
     $(function () {
@@ -6210,37 +6207,37 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
             }
         })
         //	提交按钮
-        $("#submit_btn").click(function (e) {
-            for (var j = 0; j < 5; j++) {
-                if ($('input').eq(j).val().length == 0) {
-                    $('input').eq(j).focus();
-                    if (j == 4) {
-                        $('input').eq(j).parent().next().next("div").text("此处不能为空");
-                        $('input').eq(j).parent().next().next("div").css("color", 'red');
-                        e.preventDefault();
-                        return;
-                    }
-                    $('input').eq(j).parent().next(".tips").text("此处不能为空");
-                    $('input').eq(j).parent().next(".tips").css("color", 'red');
-                    e.preventDefault();
-                    return;
-                }
-            }
-            //协议
-            if ($("#xieyi")[0].checked) {
-                //向变量stuList数组添加一个数值，数值内部格式Student(name,password,tel,id)
-                //发送用户信息
-                stuList.push(new Student($('input').eq(0).val(), $('input').eq(1).val(), $('input').eq(3).val(), stuList.length + 1));
-                localStorage.setItem('stuList', JSON.stringify(stuList));
-                alert("注册成功");
-                window.open("userlist.html", "_blank");
-            } else {
-                $("#xieyi").next().next().next(".tips").text("请勾选协议");
-                $("#xieyi").next().next().next(".tips").css("color", 'red');
-                e.preventDefault();
-                return;
-            }
-        })
+        // $("#submit_btn").click(function (e) {
+        //     for (var j = 0; j < 5; j++) {
+        //         if ($('input').eq(j).val().length == 0) {
+        //             $('input').eq(j).focus();
+        //             if (j == 4) {
+        //                 $('input').eq(j).parent().next().next("div").text("此处不能为空");
+        //                 $('input').eq(j).parent().next().next("div").css("color", 'red');
+        //                 e.preventDefault();
+        //                 return;
+        //             }
+        //             $('input').eq(j).parent().next(".tips").text("此处不能为空");
+        //             $('input').eq(j).parent().next(".tips").css("color", 'red');
+        //             e.preventDefault();
+        //             return;
+        //         }
+        //     }
+        //     //协议
+        //     if ($("#xieyi")[0].checked) {
+        //         //向变量stuList数组添加一个数值，数值内部格式Student(name,password,tel,id)
+        //         //发送用户信息
+        //         stuList.push(new Student($('input').eq(0).val(), $('input').eq(1).val(), $('input').eq(3).val(), stuList.length + 1));
+        //         localStorage.setItem('stuList', JSON.stringify(stuList));
+        //         alert("注册成功");
+        //         window.open("userlist.html", "_blank");
+        //     } else {
+        //         $("#xieyi").next().next().next(".tips").text("请勾选协议");
+        //         $("#xieyi").next().next().next(".tips").css("color", 'red');
+        //         e.preventDefault();
+        //         return;
+        //     }
+        // })
 
         //  建立构造函数，构造学生信息模板
         function Student(name, password, tel, id) {
@@ -6268,6 +6265,31 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
     $(".cuo").click(function () {
         $(".zong").hide();
     });
+</script>
+<script>
+
+    function timeOutRetryMsg(sec, msg) {
+        let num = sec;
+        const timer = () => {
+            if (num <= 0) {
+                $(this).text(msg)
+                $(this).removeClass('disabled')
+                num = sec;
+                return
+            }
+            $(this).text(`请${num}秒后重试`)
+            num--
+            setTimeout(timer, 1000)
+        }
+        timer()
+    }
+
+    $("#sendCode").click(function () {
+        if ($(this).hasClass('disabled')) return;
+        $(this).addClass('disabled')
+        timeOutRetryMsg.call(this, 60, $(this).text())
+    })
+
 </script>
 </body>
 

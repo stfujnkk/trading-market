@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="/static/login/JD_sass/JD1.css"/>
     <script src="/static/login/JD_js/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
-    <title>gulimall</title>
+    <title>JMall</title>
     <style>
         #main {
             margin: auto;
@@ -67,24 +67,27 @@
                     <div></div>
                     请输入账户名和密码
                 </div>
-                <ul>
-                    <li class="top_1">
-                        <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
-                        <input type="text" placeholder=" 邮箱/用户名/已验证手机" class="user"/>
-                    </li>
-                    <li>
-                        <img src="/static/login/JD_img/user_06.png" class="err_img2"/>
-                        <input type="password" placeholder=" 密码" class="password"/>
-                    </li>
-                    <li class="bri">
-                        <a href="/static/login/">忘记密码</a>
-                    </li>
-                    <li class="ent">
-                        <button class="btn2"><a class="a">登 &nbsp; &nbsp;录</a></button>
-                    </li>
-                </ul>
+                <form action="/login" method="post">
+                    <ul>
+                        <li class="top_1">
+                            <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
+                            <input name="account" type="text" placeholder=" 邮箱/用户名/已验证手机" class="user"/>
+                        </li>
+                        <li>
+                            <img src="/static/login/JD_img/user_06.png" class="err_img2"/>
+                            <input name="password" type="password" placeholder=" 密码" class="password"/>
+                        </li>
+                        <li class="bri">
+                            <a href="/static/login/">忘记密码</a>
+                        </li>
+                        <li class="ent">
+                            <button class="btn2" type="submit"><a class="a">登 &nbsp; &nbsp;录</a></button>
+                        </li>
+                    </ul>
+                </form>
             </div>
             <div class="si_out">
+                <!-- TODO 第三方登录OAuth github.com gitee.com 221-->
                 <ul>
                     <li>
                         <a href="/static/login/#">
@@ -134,11 +137,14 @@
             <li class="little">|</li>
             <li><a href="/static/login/#">English Site</a></li>
         </ul>
-        <span>Copyright &copy; 2004-2017 JMall商城gulimall.com 版权所有</span>
+        <span>Copyright &copy; 2004-2017 JMall商城JMall.com 版权所有</span>
     </footer>
 </div>
 
 </body>
+<script th:if="${errors!=null && #maps.containsKey(errors,'msg')}">
+    alert(`[[${errors.msg}]]`)
+</script>
 <script type="text/javascript">
     var alDiv = document.getElementsByClassName('tab');
     var alBtn = document.getElementsByTagName('h2');
@@ -162,32 +168,32 @@
     var err_img1 = document.getElementsByClassName('err_img1')[0];
     var err_img2 = document.getElementsByClassName('err_img2')[0];
 
-    btn2.onclick = function () {
-        if (user.value == '' || pass.value == '') {
-            err.style.display = 'block';
-            user.style.border = '1px solid red';
-            pass.style.border = '1px solid red';
-            err_img1.src = 'JD_img/img11.png';
-            err_img2.src = 'JD_img/img22.png';
-        } else {
-            var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";
-        }
-        user.onfocus = function () {
-            err_img1.src = 'JD_img/grow1.png';
-            user.style.border = '1px solid #999';
-        }
-        pass.onfocus = function () {
-            err_img2.src = 'JD_img/grow2.png';
-            pass.style.border = '1px solid #999';
-        }
-        user.onblur = function () {
-            err_img1.src = 'JD_img/img11.png';
-            user.style.border = '1px solid red';
-        }
-        pass.onblur = function () {
-            err_img2.src = 'JD_img/img22.png';
-            pass.style.border = '1px solid red';
-        }
-    }
+    // btn2.onclick = function () {
+    //     if (user.value == '' || pass.value == '') {
+    //         err.style.display = 'block';
+    //         user.style.border = '1px solid red';
+    //         pass.style.border = '1px solid red';
+    //         err_img1.src = 'JD_img/img11.png';
+    //         err_img2.src = 'JD_img/img22.png';
+    //     } else {
+    //         var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";
+    //     }
+    //     user.onfocus = function () {
+    //         err_img1.src = 'JD_img/grow1.png';
+    //         user.style.border = '1px solid #999';
+    //     }
+    //     pass.onfocus = function () {
+    //         err_img2.src = 'JD_img/grow2.png';
+    //         pass.style.border = '1px solid #999';
+    //     }
+    //     user.onblur = function () {
+    //         err_img1.src = 'JD_img/img11.png';
+    //         user.style.border = '1px solid red';
+    //     }
+    //     pass.onblur = function () {
+    //         err_img2.src = 'JD_img/img22.png';
+    //         pass.style.border = '1px solid red';
+    //     }
+    // }
 </script>
 </html>
